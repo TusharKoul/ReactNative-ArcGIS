@@ -1,0 +1,3 @@
+rootProject.name = 'ArcGISReactSample'
+
+include ':app'
