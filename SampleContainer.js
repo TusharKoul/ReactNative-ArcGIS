@@ -23,8 +23,11 @@ export default class SampleContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        // typingTimeout isn't directly responsible for manipulating UI,
+        // hence it's not part of the state, rather its a member of the class
+        this.typingTimeout = 0;
         this.state = {
-            typingTimeout: 0,
             searchData: null
         };
     }
@@ -44,20 +47,15 @@ export default class SampleContainer extends Component {
     }
 
     _onSearchTextChange = (text) => {
-        let {typingTimeout} = this.state;
-        if(typingTimeout) {
+        if(this.typingTimeout) {
             console.log('clearing timeout');
-            clearTimeout(typingTimeout);
+            clearTimeout(this.typingTimeout);
         }
 
         // search after 1 sec of typing
-        let timeout = setTimeout(()=> {
+        this.typingTimeout = setTimeout(()=> {
             this._fetchPlaceSuggestions(text);
         },1000);
-
-        this.setState({
-            typingTimeout: timeout
-        });
     };
 
     _fetchPlaceSuggestions = (text) => {
