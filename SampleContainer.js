@@ -24,26 +24,21 @@ export default class SampleContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            typingTimeout: 0
+            typingTimeout: 0,
+            searchData: null
         };
     }
 
     render() {
+        let {searchData} = this.state;
+        let searchListView = (searchData) ? this._renderSearchListView() : null;
         return (
         <View style={styles.container}>
             <TextInput  style={styles.searchInput}
                         placeholder='Search for place'
                         onChangeText={this._onSearchTextChange} />
             <AGSMapView style={styles.map}/>
-            <View style={styles.searchListContainer}>
-                <FlatList
-                    style={styles.searchList}
-                    data={rows}
-                    renderItem={this._renderSearchItem}
-                    keyExtractor={this._keyExtractor}
-                    automaticallyAdjustContentInsets={false}
-                />
-            </View>
+            {searchListView}
         </View>
         );
     }
@@ -57,12 +52,41 @@ export default class SampleContainer extends Component {
 
         // search after 1 sec of typing
         let timeout = setTimeout(()=> {
-            console.log('Fire search function with ' + text);
+            this._fetchPlaceSuggestions(text);
         },1000);
 
         this.setState({
             typingTimeout: timeout
         });
+    };
+
+    _fetchPlaceSuggestions = (text) => {
+        if(text.trim()) {
+            //call fetch here
+            console.log('Fire search function with ' + text);
+            this.setState({
+                searchData:rows
+            });
+        }
+        else {
+            this.setState({
+                searchData:null
+            });
+        }
+    };
+
+    _renderSearchListView = () => {
+        return (
+        <View style={styles.searchListContainer}>
+            <FlatList
+                style={styles.searchList}
+                data={rows}
+                renderItem={this._renderSearchItem}
+                keyExtractor={this._keyExtractor}
+                automaticallyAdjustContentInsets={false}
+            />
+        </View>
+        );
     };
 
     _keyExtractor = (item, index) => item.id;
