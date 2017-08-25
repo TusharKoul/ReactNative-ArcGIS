@@ -5,9 +5,19 @@ import {
     StyleSheet,
     View,
     TextInput,
+    FlatList,
+    Text
 } from 'react-native';
 
 import AGSMapView from './AGSMapView';
+
+const rows = [
+    {id: 0, text: 'Place 1'},
+    {id: 1, text: 'Place 2'},
+    {id: 2, text: 'Place 3'},
+    {id: 3, text: 'Place 4'},
+];
+
 
 export default class SampleContainer extends Component {
 
@@ -23,13 +33,22 @@ export default class SampleContainer extends Component {
         <View style={styles.container}>
             <TextInput  style={styles.searchInput}
                         placeholder='Search for place'
-                        onChangeText={this.onSearchTextChange} />
+                        onChangeText={this._onSearchTextChange} />
             <AGSMapView style={styles.map}/>
+            <View style={styles.searchListContainer}>
+                <FlatList
+                    style={styles.searchList}
+                    data={rows}
+                    renderItem={this._renderSearchItem}
+                    keyExtractor={this._keyExtractor}
+                    automaticallyAdjustContentInsets={false}
+                />
+            </View>
         </View>
         );
     }
 
-    onSearchTextChange = (text) => {
+    _onSearchTextChange = (text) => {
         let {typingTimeout} = this.state;
         if(typingTimeout) {
             console.log('clearing timeout');
@@ -44,7 +63,17 @@ export default class SampleContainer extends Component {
         this.setState({
             typingTimeout: timeout
         });
+    };
 
+    _keyExtractor = (item, index) => item.id;
+
+    _renderSearchItem = ({item}) => {
+        console.log(item);
+        return(
+        <Text style={styles.searchItem}>
+            {item.text}
+        </Text>
+        );
     }
 }
 
@@ -66,5 +95,18 @@ const styles = StyleSheet.create({
         height: 30,
         paddingLeft: 10,
         paddingRight: 10
+    },
+    searchListContainer:{
+        position: 'absolute',
+        top:40,
+        left:10,
+        right:10,
+        height: 130,
+        backgroundColor:'lightgray'
+    },
+    searchItem:{
+        padding:10,
+        marginBottom:2,
+        backgroundColor:'whitesmoke'
     }
 });
