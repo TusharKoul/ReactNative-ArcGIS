@@ -1,14 +1,13 @@
 //
-//  AGSRNMapView.h
+//  ARNMapViewManager.h
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 8/23/17.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <ArcGIS/ArcGIS.h>
+#import <React/RCTViewManager.h>
 
-@interface AGSRNMapView : AGSMapView
+@interface ARNMapViewManager : RCTViewManager
 
 @end
