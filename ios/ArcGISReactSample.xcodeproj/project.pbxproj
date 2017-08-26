@@ -39,6 +39,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		DB09842F1F4E35F50063C932 /* ARNMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB09842E1F4E35F50063C932 /* ARNMapView.m */; };
 		DB0984321F4E36370063C932 /* ARNMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0984311F4E36370063C932 /* ARNMapViewManager.m */; };
+		DB3326551F50D57300FCCD21 /* ARNLocatorTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +294,8 @@
 		DB09842E1F4E35F50063C932 /* ARNMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNMapView.m; sourceTree = "<group>"; };
 		DB0984301F4E36370063C932 /* ARNMapViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARNMapViewManager.h; sourceTree = "<group>"; };
 		DB0984311F4E36370063C932 /* ARNMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNMapViewManager.m; sourceTree = "<group>"; };
+		DB3326531F50D57300FCCD21 /* ARNLocatorTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARNLocatorTask.h; sourceTree = "<group>"; };
+		DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNLocatorTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -553,6 +556,8 @@
 				DB09842E1F4E35F50063C932 /* ARNMapView.m */,
 				DB0984301F4E36370063C932 /* ARNMapViewManager.h */,
 				DB0984311F4E36370063C932 /* ARNMapViewManager.m */,
+				DB3326531F50D57300FCCD21 /* ARNLocatorTask.h */,
+				DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */,
 			);
 			path = "ArcGIS Components";
 			sourceTree = "<group>";
@@ -1060,6 +1065,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB09842F1F4E35F50063C932 /* ARNMapView.m in Sources */,
+				DB3326551F50D57300FCCD21 /* ARNLocatorTask.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				DB0984321F4E36370063C932 /* ARNMapViewManager.m in Sources */,

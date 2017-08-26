@@ -6,7 +6,8 @@ import {
     View,
     TextInput,
     FlatList,
-    Text
+    Text,
+    NativeModules
 } from 'react-native';
 
 import AGSMapView from './AGSMapView';
@@ -18,7 +19,7 @@ const rows = [
     {id: 3, text: 'Place 4'},
 ];
 
-
+let AGSTaskLocator = NativeModules.AGSTaskLocator;
 export default class SampleContainer extends Component {
 
     constructor(props) {
@@ -30,6 +31,11 @@ export default class SampleContainer extends Component {
         this.state = {
             searchData: null
         };
+    }
+
+    componentDidMount() {
+        // careful of spelling here!
+        AGSTaskLocator.initWithURL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer');
     }
 
     render() {
@@ -62,6 +68,11 @@ export default class SampleContainer extends Component {
         if(text.trim()) {
             //call fetch here
             console.log('Fire search function with ' + text);
+
+            AGSTaskLocator.suggestWithSearchText(text)
+                .then(this._handleLocatorSuggestionsSuccess)
+                .catch(this._handleLocatorSuggestionsFailure);
+
             this.setState({
                 searchData:rows
             });
@@ -71,6 +82,16 @@ export default class SampleContainer extends Component {
                 searchData:null
             });
         }
+    };
+
+    _handleLocatorSuggestionsSuccess = (results) => {
+        console.log('success');
+        console.log(results);
+    };
+
+    _handleLocatorSuggestionsFailure = (error) => {
+        console.log('failure');
+        console.log(error);
     };
 
     _renderSearchListView = () => {
