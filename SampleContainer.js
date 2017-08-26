@@ -7,7 +7,8 @@ import {
     TextInput,
     FlatList,
     Text,
-    NativeModules
+    NativeModules,
+    TouchableHighlight
 } from 'react-native';
 
 import AGSMapView from './AGSMapView';
@@ -67,9 +68,11 @@ export default class SampleContainer extends Component {
 
     _renderSearchItem = ({item}) => {
         return(
-            <Text style={styles.searchItem}>
-                {item}
-            </Text>
+            <TouchableHighlight onPress={() => this._onSearchItemPress(item)}>
+                <Text style={styles.searchItem}>
+                    {item}
+                </Text>
+            </TouchableHighlight>
         );
     };
 
@@ -85,6 +88,10 @@ export default class SampleContainer extends Component {
         this.typingTimeout = setTimeout(()=> {
             this._fetchPlaceSuggestions(text);
         },500);
+    };
+
+    _onSearchItemPress = (searchItem) => {
+        console.log(searchItem);
     };
 
     _fetchPlaceSuggestions = (text) => {
