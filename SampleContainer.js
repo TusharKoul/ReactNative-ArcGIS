@@ -55,7 +55,7 @@ export default class SampleContainer extends Component {
         // search after 1 sec of typing
         this.typingTimeout = setTimeout(()=> {
             this._fetchPlaceSuggestions(text);
-        },1000);
+        },500);
     };
 
     _fetchPlaceSuggestions = (text) => {
