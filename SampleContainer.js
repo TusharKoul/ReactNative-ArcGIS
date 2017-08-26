@@ -16,6 +16,8 @@ import AGSMapView from './AGSMapView';
 let AGSTaskLocator = NativeModules.AGSTaskLocator;
 export default class SampleContainer extends Component {
 
+    // Lifecycle methods ----->
+
     constructor(props) {
         super(props);
 
@@ -46,9 +48,11 @@ export default class SampleContainer extends Component {
         );
     }
 
+
+    // Events ----->
+
     _onSearchTextChange = (text) => {
         if(this.typingTimeout) {
-            console.log('clearing timeout');
             clearTimeout(this.typingTimeout);
         }
 
@@ -78,11 +82,7 @@ export default class SampleContainer extends Component {
     };
 
     _handleLocatorSuggestionsSuccess = (results) => {
-        console.log('success');
-        console.log(results);
         let data = results.map(function(item) {return item.label;});
-        console.log(data);
-
         this.setState({
             searchData:data
         });
@@ -99,11 +99,12 @@ export default class SampleContainer extends Component {
         }
     };
 
+
+    // List view related ----->
     _renderSearchListView = () => {
         return (
         <View style={styles.searchListContainer}>
             <FlatList
-                style={styles.searchList}
                 data={this.state.searchData}
                 renderItem={this._renderSearchItem}
                 keyExtractor={this._keyExtractor}
