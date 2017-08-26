@@ -24,4 +24,13 @@
   return param;
 }
 
++(AGSGeocodeParameters *)AGSGeocodeParameters:(NSDictionary *)json {
+  json = [self NSDictionary:json];
+  AGSGeocodeParameters *param = [[AGSGeocodeParameters alloc] init];
+  
+  //TODO: convert completely
+  
+  return param;
+}
+
 @end

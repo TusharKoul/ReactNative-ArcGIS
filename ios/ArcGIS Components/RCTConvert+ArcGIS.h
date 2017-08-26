@@ -12,5 +12,6 @@
 @interface RCTConvert (ArcGIS)
 
 + (AGSSuggestParameters *)AGSSuggestParameters:(NSDictionary *)json;
++ (AGSGeocodeParameters *)AGSGeocodeParameters:(NSDictionary *)json;
 
 @end

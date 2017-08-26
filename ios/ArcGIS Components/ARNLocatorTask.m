@@ -53,7 +53,6 @@ RCT_REMAP_METHOD(suggestWithSearchTextAndParameters,
   }
   
   __weak __typeof__(self) welf = self;
-  
   [_locatorTask suggestWithSearchText:searchText
                            parameters:params
                            completion:^(NSArray<AGSSuggestResult *> * _Nullable suggestResults, NSError * _Nullable error) {
@@ -65,6 +64,44 @@ RCT_REMAP_METHOD(suggestWithSearchTextAndParameters,
       reject(@(error.code).stringValue,@"no results found, try again",error);
     }
   }];
+}
+
+
+RCT_EXPORT_METHOD(geocodeWithSearchText:(NSString *)searchText
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+{
+  [self geocodeWithSearchText:searchText
+                   parameters:nil
+                     resolver:resolve
+                     rejecter:reject];
+}
+
+
+RCT_REMAP_METHOD(geocodeWithSearchTextAndParameters,
+                 geocodeWithSearchText:(NSString *)searchText parameters:(NSDictionary *)parameters
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+  if([self rejectWhenUninitialized:reject]) {
+    return;
+  }
+  
+  AGSGeocodeParameters *params = nil;
+  if(parameters) {
+    params = [RCTConvert AGSGeocodeParameters:parameters];
+  }
+  
+  __weak __typeof__(self) welf = self;
+  [_locatorTask geocodeWithSearchText:searchText parameters:params completion:^(NSArray<AGSGeocodeResult *> * _Nullable geocodeResults, NSError * _Nullable error) {
+    if(geocodeResults.count > 0) {
+      resolve([welf jsonFromGeocodeResults:geocodeResults]);
+    }
+    else {
+      reject(@(error.code).stringValue,@"no results found, try again",error);
+    }
+  }];
+  
+  
 }
 
 
@@ -86,6 +123,27 @@ RCT_REMAP_METHOD(suggestWithSearchTextAndParameters,
   for(AGSSuggestResult* result in results) {
     NSDictionary *json = @{@"label": result.label,
                            @"isCollection" : @(result.isCollection)};
+    [jsonResults addObject:json];
+  }
+
+  //return immutable copy
+  return [jsonResults copy];
+}
+
+-(NSArray *)jsonFromGeocodeResults:(NSArray<AGSGeocodeResult *> *)results {
+  NSMutableArray *jsonResults = [[NSMutableArray alloc] init];
+  
+  NSError *error = nil;
+  for(AGSGeocodeResult* result in results) {
+    NSDictionary *json = @{
+                           @"displayLocation":[result.displayLocation toJSON:&error],
+                           @"extent": [result.extent toJSON:&error],
+                           @"inputLocation": [result.inputLocation toJSON:&error],
+                           @"label": result.label,
+                           @"routeLocation": [result.routeLocation toJSON:&error],
+                           @"score": @(result.score),
+                           @"attributes": [RCTConvert NSDictionary:result.attributes]
+                          };
     [jsonResults addObject:json];
   }
   

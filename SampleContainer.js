@@ -70,7 +70,7 @@ export default class SampleContainer extends Component {
         return(
             <TouchableHighlight onPress={() => this._onSearchItemPress(item)}>
                 <Text style={styles.searchItem}>
-                    {item}
+                    {item.label}
                 </Text>
             </TouchableHighlight>
         );
@@ -88,10 +88,6 @@ export default class SampleContainer extends Component {
         this.typingTimeout = setTimeout(()=> {
             this._fetchPlaceSuggestions(text);
         },500);
-    };
-
-    _onSearchItemPress = (searchItem) => {
-        console.log(searchItem);
     };
 
     _fetchPlaceSuggestions = (text) => {
@@ -114,9 +110,8 @@ export default class SampleContainer extends Component {
     };
 
     _handleLocatorSuggestionsSuccess = (results) => {
-        let data = results.map(function(item) {return item.label;});
         this.setState({
-            searchData:data
+            searchData:results
         });
     };
 
@@ -130,6 +125,22 @@ export default class SampleContainer extends Component {
             });
         }
     };
+
+    _onSearchItemPress = (searchItem) => {
+        console.log(searchItem);
+        AGSTaskLocator.geocodeWithSearchText(searchItem.label)
+            .then(this._handleGeocodeSuccess)
+            .catch(this._handleGeocodeFailure);
+    };
+
+    _handleGeocodeSuccess = (results) => {
+        console.log(results);
+    };
+
+    _handleGeocodeFailure = (error) => {
+        this._handleLocatorSuggestionsFailure(error);
+    };
+
 }
 
 const styles = StyleSheet.create({
