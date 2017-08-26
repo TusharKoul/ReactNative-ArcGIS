@@ -12,12 +12,6 @@ import {
 
 import AGSMapView from './AGSMapView';
 
-const rows = [
-    {id: 0, text: 'Place 1'},
-    {id: 1, text: 'Place 2'},
-    {id: 2, text: 'Place 3'},
-    {id: 3, text: 'Place 4'},
-];
 
 let AGSTaskLocator = NativeModules.AGSTaskLocator;
 export default class SampleContainer extends Component {
@@ -72,10 +66,6 @@ export default class SampleContainer extends Component {
             AGSTaskLocator.suggestWithSearchText(text)
                 .then(this._handleLocatorSuggestionsSuccess)
                 .catch(this._handleLocatorSuggestionsFailure);
-
-            this.setState({
-                searchData:rows
-            });
         }
         else {
             this.setState({
@@ -87,11 +77,23 @@ export default class SampleContainer extends Component {
     _handleLocatorSuggestionsSuccess = (results) => {
         console.log('success');
         console.log(results);
+        let data = results.map(function(item) {return item.label;});
+        console.log(data);
+
+        this.setState({
+            searchData:data
+        });
     };
 
     _handleLocatorSuggestionsFailure = (error) => {
-        console.log('failure');
-        console.log(error);
+        if(parseInt(error.code) === 1) {
+            console.error(error);
+        }
+        else {
+            this.setState({
+                searchData:[error.message]
+            });
+        }
     };
 
     _renderSearchListView = () => {
@@ -99,7 +101,7 @@ export default class SampleContainer extends Component {
         <View style={styles.searchListContainer}>
             <FlatList
                 style={styles.searchList}
-                data={rows}
+                data={this.state.searchData}
                 renderItem={this._renderSearchItem}
                 keyExtractor={this._keyExtractor}
                 automaticallyAdjustContentInsets={false}
@@ -108,13 +110,12 @@ export default class SampleContainer extends Component {
         );
     };
 
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => index;
 
     _renderSearchItem = ({item}) => {
-        console.log(item);
         return(
         <Text style={styles.searchItem}>
-            {item.text}
+            {item}
         </Text>
         );
     }

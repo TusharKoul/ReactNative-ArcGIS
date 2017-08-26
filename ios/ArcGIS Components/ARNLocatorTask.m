@@ -42,7 +42,7 @@ RCT_EXPORT_METHOD(suggestWithSearchText:(NSString *)searchText
       resolve([welf jsonFromSuggestResults:suggestResults]);
     }
     else {
-      reject(@(error.code).stringValue,@"suggest results not found",error);
+      reject(@(error.code).stringValue,@"no results found, try again",error);
     }
   }];
 }
