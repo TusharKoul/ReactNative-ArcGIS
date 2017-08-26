@@ -40,6 +40,7 @@
 		DB09842F1F4E35F50063C932 /* ARNMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB09842E1F4E35F50063C932 /* ARNMapView.m */; };
 		DB0984321F4E36370063C932 /* ARNMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0984311F4E36370063C932 /* ARNMapViewManager.m */; };
 		DB3326551F50D57300FCCD21 /* ARNLocatorTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */; };
+		DB4510121F51099B0002BCB2 /* RCTConvert+ArcGIS.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4510111F51099B0002BCB2 /* RCTConvert+ArcGIS.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +297,8 @@
 		DB0984311F4E36370063C932 /* ARNMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNMapViewManager.m; sourceTree = "<group>"; };
 		DB3326531F50D57300FCCD21 /* ARNLocatorTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARNLocatorTask.h; sourceTree = "<group>"; };
 		DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNLocatorTask.m; sourceTree = "<group>"; };
+		DB4510101F51099B0002BCB2 /* RCTConvert+ArcGIS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+ArcGIS.h"; sourceTree = "<group>"; };
+		DB4510111F51099B0002BCB2 /* RCTConvert+ArcGIS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+ArcGIS.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -431,7 +434,7 @@
 		13B07FAE1A68108700A75B9A /* ArcGISReactSample */ = {
 			isa = PBXGroup;
 			children = (
-				DB09842C1F4E35F50063C932 /* ArcGIS Components */,
+				DB09842C1F4E35F50063C932 /* ArcGIS */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -549,9 +552,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DB09842C1F4E35F50063C932 /* ArcGIS Components */ = {
+		DB09842C1F4E35F50063C932 /* ArcGIS */ = {
 			isa = PBXGroup;
 			children = (
+				DB45100F1F51096C0002BCB2 /* Categories */,
 				DB09842D1F4E35F50063C932 /* ARNMapView.h */,
 				DB09842E1F4E35F50063C932 /* ARNMapView.m */,
 				DB0984301F4E36370063C932 /* ARNMapViewManager.h */,
@@ -559,7 +563,17 @@
 				DB3326531F50D57300FCCD21 /* ARNLocatorTask.h */,
 				DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */,
 			);
+			name = ArcGIS;
 			path = "ArcGIS Components";
+			sourceTree = "<group>";
+		};
+		DB45100F1F51096C0002BCB2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				DB4510101F51099B0002BCB2 /* RCTConvert+ArcGIS.h */,
+				DB4510111F51099B0002BCB2 /* RCTConvert+ArcGIS.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1064,6 +1078,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB4510121F51099B0002BCB2 /* RCTConvert+ArcGIS.m in Sources */,
 				DB09842F1F4E35F50063C932 /* ARNMapView.m in Sources */,
 				DB3326551F50D57300FCCD21 /* ARNLocatorTask.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,

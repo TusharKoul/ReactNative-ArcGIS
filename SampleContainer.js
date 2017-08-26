@@ -60,10 +60,13 @@ export default class SampleContainer extends Component {
 
     _fetchPlaceSuggestions = (text) => {
         if(text.trim()) {
-            //call fetch here
-            console.log('Fire search function with ' + text);
-
-            AGSTaskLocator.suggestWithSearchText(text)
+            let parameters = {
+                "maxResults": 5,
+                "categories":[
+                    "city"
+                ]
+            };
+            AGSTaskLocator.suggestWithSearchTextAndParameters(text,parameters)
                 .then(this._handleLocatorSuggestionsSuccess)
                 .catch(this._handleLocatorSuggestionsFailure);
         }

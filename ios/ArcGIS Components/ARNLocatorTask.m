@@ -9,6 +9,7 @@
 #import "ARNLocatorTask.h"
 #import <React/RCTConvert.h>
 #import <React/RCTLog.h>
+#import "RCTConvert+ArcGIS.h"
 
 #import <ArcGIS/ArcGIS.h>
 
@@ -30,13 +31,32 @@ RCT_EXPORT_METHOD(suggestWithSearchText:(NSString *)searchText
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
+  [self suggestWithSearchText:searchText
+                   parameters:nil
+                     resolver:resolve
+                     rejecter:reject];
+}
+
+
+RCT_REMAP_METHOD(suggestWithSearchTextAndParameters,
+                 suggestWithSearchText:(NSString *)searchText parameters:(NSDictionary *)parameters
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+{
   if([self rejectWhenUninitialized:reject]) {
     return;
   }
   
+  AGSSuggestParameters *params = nil;
+  if(parameters) {
+    params = [RCTConvert AGSSuggestParameters:parameters];
+  }
+  
   __weak __typeof__(self) welf = self;
-
-  [_locatorTask suggestWithSearchText:searchText completion:^(NSArray<AGSSuggestResult *> * _Nullable suggestResults, NSError * _Nullable error) {
+  
+  [_locatorTask suggestWithSearchText:searchText
+                           parameters:params
+                           completion:^(NSArray<AGSSuggestResult *> * _Nullable suggestResults, NSError * _Nullable error) {
     if(suggestResults.count > 0) {
       RCTLog(@"%@", suggestResults.ags_toJSON);
       resolve([welf jsonFromSuggestResults:suggestResults]);
