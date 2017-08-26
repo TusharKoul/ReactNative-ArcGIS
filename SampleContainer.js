@@ -49,6 +49,31 @@ export default class SampleContainer extends Component {
     }
 
 
+    // List view related ----->
+    _renderSearchListView = () => {
+        return (
+            <View style={styles.searchListContainer}>
+                <FlatList
+                    data={this.state.searchData}
+                    renderItem={this._renderSearchItem}
+                    keyExtractor={this._keyExtractor}
+                    automaticallyAdjustContentInsets={false}
+                />
+            </View>
+        );
+    };
+
+    _keyExtractor = (item, index) => index;
+
+    _renderSearchItem = ({item}) => {
+        return(
+            <Text style={styles.searchItem}>
+                {item}
+            </Text>
+        );
+    };
+
+
     // Events ----->
 
     _onSearchTextChange = (text) => {
@@ -98,31 +123,6 @@ export default class SampleContainer extends Component {
             });
         }
     };
-
-
-    // List view related ----->
-    _renderSearchListView = () => {
-        return (
-        <View style={styles.searchListContainer}>
-            <FlatList
-                data={this.state.searchData}
-                renderItem={this._renderSearchItem}
-                keyExtractor={this._keyExtractor}
-                automaticallyAdjustContentInsets={false}
-            />
-        </View>
-        );
-    };
-
-    _keyExtractor = (item, index) => index;
-
-    _renderSearchItem = ({item}) => {
-        return(
-        <Text style={styles.searchItem}>
-            {item}
-        </Text>
-        );
-    }
 }
 
 const styles = StyleSheet.create({
