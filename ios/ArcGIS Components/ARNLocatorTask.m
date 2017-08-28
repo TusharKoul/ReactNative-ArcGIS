@@ -57,7 +57,7 @@ RCT_REMAP_METHOD(suggestWithSearchTextAndParameters,
                            parameters:params
                            completion:^(NSArray<AGSSuggestResult *> * _Nullable suggestResults, NSError * _Nullable error) {
     if(suggestResults.count > 0) {
-      RCTLog(@"%@", suggestResults.ags_toJSON);
+      RCTLog(@"returning suggestions %@", suggestResults.ags_toJSON);
       resolve([welf jsonFromSuggestResults:suggestResults]);
     }
     else {
@@ -142,7 +142,7 @@ RCT_REMAP_METHOD(geocodeWithSearchTextAndParameters,
                            @"label": result.label,
                            @"routeLocation": [result.routeLocation toJSON:&error],
                            @"score": @(result.score),
-                           @"attributes": [RCTConvert NSDictionary:result.attributes]
+                           @"attributes": result.attributes
                           };
     [jsonResults addObject:json];
   }
