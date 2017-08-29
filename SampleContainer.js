@@ -26,7 +26,14 @@ export default class SampleContainer extends Component {
         // hence it's not part of the state, rather its a member of the class
         this.typingTimeout = 0;
         this.state = {
-            searchData: null
+            searchData: null,
+            viewPointCenter: {
+                x:-117.196,
+                y:34.057,
+                spatialReference:{
+                    wkid:4326
+                }
+            }
         };
     }
 
@@ -36,14 +43,15 @@ export default class SampleContainer extends Component {
     }
 
     render() {
-        let {searchData} = this.state;
+        console.log('rendering sample container');
+        let {searchData, viewPointCenter} = this.state;
         let searchListView = (searchData) ? this._renderSearchListView() : null;
         return (
         <View style={styles.container}>
             <TextInput  style={styles.searchInput}
                         placeholder='Search for place'
                         onChangeText={this._onSearchTextChange} />
-            <AGSMapView style={styles.map}/>
+            <AGSMapView style={styles.map} viewPointCenter={viewPointCenter}/>
             {searchListView}
         </View>
         );
@@ -127,14 +135,17 @@ export default class SampleContainer extends Component {
     };
 
     _onSearchItemPress = (searchItem) => {
-        console.log(searchItem);
         AGSTaskLocator.geocodeWithSearchText(searchItem.label)
             .then(this._handleGeocodeSuccess)
             .catch(this._handleGeocodeFailure);
     };
 
     _handleGeocodeSuccess = (results) => {
-        console.log(results);
+        let topResult = results[0];
+        console.log(topResult.displayLocation);
+        this.setState({
+            viewPointCenter:topResult.displayLocation
+        });
     };
 
     _handleGeocodeFailure = (error) => {

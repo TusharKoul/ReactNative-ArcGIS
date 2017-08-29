@@ -57,7 +57,6 @@ RCT_REMAP_METHOD(suggestWithSearchTextAndParameters,
                            parameters:params
                            completion:^(NSArray<AGSSuggestResult *> * _Nullable suggestResults, NSError * _Nullable error) {
     if(suggestResults.count > 0) {
-      RCTLog(@"returning suggestions %@", suggestResults.ags_toJSON);
       resolve([welf jsonFromSuggestResults:suggestResults]);
     }
     else {

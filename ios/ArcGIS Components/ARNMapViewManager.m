@@ -8,7 +8,8 @@
 
 #import "ARNMapViewManager.h"
 #import "ARNMapView.h"
-
+#import "RCTConvert+ArcGIS.h"
+#import <React/RCTLog.h>
 
 @implementation ARNMapViewManager
 
@@ -18,8 +19,17 @@ RCT_EXPORT_MODULE()
 
 
 -(UIView *)view {
-  ARNMapView *mapView = [[ARNMapView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
-  return mapView;
+  return [[ARNMapView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(viewPointCenter, AGSPoint, ARNMapView) {
+  RCTLogInfo(@"%@",view);
+  RCTLogInfo(@"%@",defaultView);
+  AGSPoint *point;
+  if(json) {
+    point = [RCTConvert AGSPoint:json];
+  }
+  [view setViewPointCenter:point];
 }
 
 

@@ -11,7 +11,7 @@
 
 #import <React/RCTBridgeModule.h>
 #import <React/UIView+React.h>
-
+#import <React/RCTLog.h>
 
 @interface ARNMapView ()
 
@@ -21,6 +21,7 @@
 {
   RCTEventDispatcher *_eventDispatcher;
   AGSMapView *_mapView;
+  AGSPoint *_viewPointCenter;
 }
 
 
@@ -39,9 +40,13 @@
   }
   
   _mapView = [[AGSMapView alloc] initWithFrame:self.bounds];
+  CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(100.0, 100.0);
+  if(_viewPointCenter) {
+    coord = _viewPointCenter.toCLLocationCoordinate2D;
+  }
   _mapView.map = [AGSMap mapWithBasemapType:AGSBasemapTypeDarkGrayCanvasVector
-                                   latitude:100.0
-                                  longitude:100.0
+                                   latitude:coord.latitude
+                                  longitude:coord.longitude
                               levelOfDetail:2];
   _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:_mapView];
@@ -61,6 +66,13 @@
   [_mapView layoutSubviews];
 }
 
+
+-(void)setViewPointCenter:(AGSPoint *)center{
+  _viewPointCenter = center;
+  if(_mapView) {
+    [_mapView setViewpointCenter:_viewPointCenter completion:nil];
+  }
+}
 
 
 @end
