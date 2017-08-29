@@ -54,4 +54,4 @@ fastlane/screenshots
 
 ## Cocoapods
 Podfile.lock
-/Pods
+Pods/
