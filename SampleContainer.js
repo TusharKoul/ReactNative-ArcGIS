@@ -8,13 +8,14 @@ import {
     FlatList,
     Text,
     NativeModules,
-    TouchableHighlight
+    TouchableHighlight,
+    processColor
 } from 'react-native';
 
 import AGSMapView from './AGSMapView';
 
 
-let AGSTaskLocator = NativeModules.AGSTaskLocator;
+let {AGSTaskLocator, ARNMapViewManager} = NativeModules;
 export default class SampleContainer extends Component {
 
     // Lifecycle methods ----->
@@ -151,7 +152,10 @@ export default class SampleContainer extends Component {
         });
 
         let pointGraphic = {
-            type:"point",
+            type:'point',
+            style: ARNMapViewManager.PointSymbolStyles.AGSSimpleMarkerSymbolStyleDiamond,
+            color:processColor('green'),
+            size:12,
             coordinates:[topResult.displayLocation],
         };
         this._mapView.addGraphics([pointGraphic]);

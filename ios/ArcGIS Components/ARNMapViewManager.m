@@ -44,4 +44,35 @@ RCT_EXPORT_METHOD(addGraphics:(nonnull NSNumber *)reactTag
 }
 
 
+-(NSDictionary *)constantsToExport {
+  return @{
+           @"PointSymbolStyles": @{
+               @"AGSSimpleMarkerSymbolStyleCircle":@(AGSSimpleMarkerSymbolStyleCircle),
+               @"AGSSimpleMarkerSymbolStyleCross":@(AGSSimpleMarkerSymbolStyleCross),
+               @"AGSSimpleMarkerSymbolStyleDiamond":@(AGSSimpleMarkerSymbolStyleDiamond),
+               @"AGSSimpleMarkerSymbolStyleSquare":@(AGSSimpleMarkerSymbolStyleSquare),
+               @"AGSSimpleMarkerSymbolStyleTriangle":@(AGSSimpleMarkerSymbolStyleTriangle),
+               @"AGSSimpleMarkerSymbolStyleX":@(AGSSimpleMarkerSymbolStyleX),
+               },
+           @"LineSymbolStyles": @{
+               @"AGSSimpleLineSymbolStyleDash":@(AGSSimpleLineSymbolStyleDash),
+               @"AGSSimpleLineSymbolStyleDashDot":@(AGSSimpleLineSymbolStyleDashDot),
+               @"AGSSimpleLineSymbolStyleDashDotDot":@(AGSSimpleLineSymbolStyleDashDotDot),
+               @"AGSSimpleLineSymbolStyleDot":@(AGSSimpleLineSymbolStyleDot),
+               @"AGSSimpleLineSymbolStyleNull":@(AGSSimpleLineSymbolStyleNull),
+               @"AGSSimpleLineSymbolStyleSolid":@(AGSSimpleLineSymbolStyleSolid),
+               },
+           @"FillSymbolStyles": @{
+               @"AGSSimpleFillSymbolStyleBackwardDiagonal":@(AGSSimpleFillSymbolStyleBackwardDiagonal),
+               @"AGSSimpleFillSymbolStyleCross":@(AGSSimpleFillSymbolStyleCross),
+               @"AGSSimpleFillSymbolStyleDiagonalCross":@(AGSSimpleFillSymbolStyleDiagonalCross),
+               @"AGSSimpleFillSymbolStyleForwardDiagonal":@(AGSSimpleFillSymbolStyleForwardDiagonal),
+               @"AGSSimpleFillSymbolStyleHorizontal":@(AGSSimpleFillSymbolStyleHorizontal),
+               @"AGSSimpleFillSymbolStyleNull":@(AGSSimpleFillSymbolStyleNull),
+               @"AGSSimpleFillSymbolStyleSolid":@(AGSSimpleFillSymbolStyleSolid),
+               @"AGSSimpleFillSymbolStyleVertical":@(AGSSimpleFillSymbolStyleVertical),
+               },
+           };
+}
+
 @end

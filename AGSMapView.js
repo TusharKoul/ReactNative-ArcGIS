@@ -11,7 +11,6 @@ const { ARNMapViewManager } = NativeModules;
 
 class AGSMapView extends React.Component {
     render() {
-        console.log('rendering AGSMapview');
         return (
         <ARNMapView {...this.props}/>
         );

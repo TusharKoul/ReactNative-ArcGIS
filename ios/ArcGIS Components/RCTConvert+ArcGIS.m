@@ -97,10 +97,21 @@ AGSJsonSerializableConvert(AGSSpatialReference)
 + (AGSGraphic *)pointGraphic:(NSDictionary *)json {
   NSDictionary *attributes = [self NSDictionary:json[@"attributes"]];
   NSArray *coordinates = [self NSArray:json[@"coordinates"]];
+  int style = [self int:json[@"style"]];
+  int size = [self int:json[@"size"]];
+  if (size <= 0) {
+    size = 10;
+    RCTLogWarn(@"Point graphic needs size greater than 0, default set to 10");
+  }
+  UIColor *color = [self UIColor:json[@"color"]];
+  if (color == nil) {
+    color = UIColor.redColor;
+  }
+  
   AGSPoint *point = [self AGSPoint:coordinates[0]];
-  AGSSymbol *symbol = [AGSSimpleMarkerSymbol simpleMarkerSymbolWithStyle:AGSSimpleMarkerSymbolStyleCircle
-                                                                   color:UIColor.greenColor
-                                                                    size:10];
+  AGSSymbol *symbol = [AGSSimpleMarkerSymbol simpleMarkerSymbolWithStyle:style
+                                                                   color:color
+                                                                    size:size];
   AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:point
                                                  symbol:symbol
                                              attributes:attributes];
