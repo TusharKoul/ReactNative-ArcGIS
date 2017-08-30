@@ -10,14 +10,33 @@ import {
 const { ARNMapViewManager } = NativeModules;
 
 class AGSMapView extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this._onTap= this._onTap.bind(this);
+    }
+
     render() {
         return (
-        <ARNMapView {...this.props}/>
+        <ARNMapView
+            {...this.props}
+            onTap={this._onTap}
+        />
         );
     }
 
     addGraphics(graphics) {
         ARNMapViewManager.addGraphics(findNodeHandle(this),graphics);
+    }
+
+    // method returns a Promise
+    identifyGraphicsOverlays(screenPoint, tolerance, returnPopupsOnly, maximumResults) {
+        return ARNMapViewManager.identifyGraphicsOverlays(findNodeHandle(this), screenPoint, tolerance, returnPopupsOnly, maximumResults);
+    }
+
+    _onTap(event: Event) {
+        if (!this.props.onTap) { return; }
+        this.props.onTap(event.nativeEvent);
     }
 }
 
@@ -29,6 +48,7 @@ AGSMapView.propTypes = {
             wkid:PropTypes.number
         })
     }),
+    onTap:PropTypes.func,
     graphics: PropTypes.arrayOf(PropTypes.shape({
         id:PropTypes.string.isRequired,
         isVisible:PropTypes.bool,

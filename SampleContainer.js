@@ -50,11 +50,14 @@ export default class SampleContainer extends Component {
         <View style={styles.container}>
             <TextInput  style={styles.searchInput}
                         placeholder='Search for place'
-                        onChangeText={this._onSearchTextChange} />
+                        onChangeText={this._onSearchTextChange}
+            />
             <AGSMapView
                 ref={mapView => {this._mapView = mapView; }}
                 style={styles.map}
-                viewPointCenter={viewPointCenter}/>
+                viewPointCenter={viewPointCenter}
+                onTap={this._onMapTapped}
+            />
             {searchListView}
         </View>
         );
@@ -164,6 +167,14 @@ export default class SampleContainer extends Component {
 
     _handleGeocodeFailure = (error) => {
         this._handleLocatorSuggestionsFailure(error);
+    };
+
+    _onMapTapped = (event) => {
+        let tolerance = 10;
+        let maxResults = 5;
+        this._mapView.identifyGraphicsOverlays(event.screenPoint, tolerance, false, maxResults)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
     };
 
 }

@@ -44,8 +44,33 @@ RCT_EXPORT_METHOD(addGraphics:(nonnull NSNumber *)reactTag
 }
 
 
+RCT_EXPORT_METHOD(identifyGraphicsOverlays:(nonnull NSNumber *)reactTag
+                  screenPoint:(CGPoint)screenPoint
+                  tolerance:(double)tolerance
+                  returnPopupsOnly:(BOOL)returnPopupsOnly
+                  maximumResults:(int)maximumResults
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+  [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+    ARNMapView *mapView = (ARNMapView *)viewRegistry[reactTag];
+    [mapView identifyGraphicsOverlaysAtScreenPoint:screenPoint
+                                         tolerance:tolerance
+                                  returnPopupsOnly:returnPopupsOnly
+                                    maximumResults:maximumResults
+                                          resolver:resolve rejecter:reject];
+  }];
+}
+
+
+RCT_EXPORT_VIEW_PROPERTY(onTap, RCTBubblingEventBlock);
+
 -(NSDictionary *)constantsToExport {
   return @{
+           @"GeometryType":@{
+               @"AGSGeometryTypePoint":@(AGSGeometryTypePoint),
+               @"AGSGeometryTypePolyline":@(AGSGeometryTypePolyline),
+               @"AGSGeometryTypePolygon":@(AGSGeometryTypePolygon)
+               },
            @"PointSymbolStyles": @{
                @"AGSSimpleMarkerSymbolStyleCircle":@(AGSSimpleMarkerSymbolStyleCircle),
                @"AGSSimpleMarkerSymbolStyleCross":@(AGSSimpleMarkerSymbolStyleCross),

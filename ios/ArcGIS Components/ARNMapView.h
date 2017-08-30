@@ -21,7 +21,16 @@
 // The property should be defined on the view also as so-
 - (void)setViewPointCenter:(AGSPoint *)center;
 
+- (void)addGraphics:(NSArray <AGSGraphic *> *)graphics;
 
--(void)addGraphics:(NSArray <AGSGraphic *> *)graphics;
+- (void)identifyGraphicsOverlaysAtScreenPoint:(CGPoint)screenPoint
+                                   tolerance:(double)tolerance
+                            returnPopupsOnly:(BOOL)returnPopupsOnly
+                              maximumResults:(int)maximumResults
+                                    resolver:(RCTPromiseResolveBlock)resolve
+                                    rejecter:(RCTPromiseRejectBlock)reject;
+
+@property (nonatomic, copy) RCTBubblingEventBlock onTap;
+
 
 @end

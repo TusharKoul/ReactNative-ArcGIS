@@ -13,7 +13,7 @@
 #import <React/UIView+React.h>
 #import <React/RCTLog.h>
 
-@interface ARNMapView ()
+@interface ARNMapView ()<AGSGeoViewTouchDelegate>
 
 @end
 
@@ -50,7 +50,7 @@
                                   longitude:coord.longitude
                               levelOfDetail:2];
   _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  
+  _mapView.touchDelegate = self;
   //inserting a default graphics overlay
   _graphicsOverlay = [AGSGraphicsOverlay graphicsOverlay];
   [_mapView.graphicsOverlays addObject:_graphicsOverlay];
@@ -82,5 +82,64 @@
   [_graphicsOverlay.graphics addObjectsFromArray:graphics];
 }
 
+-(void)identifyGraphicsOverlaysAtScreenPoint:(CGPoint)screenPoint
+                                   tolerance:(double)tolerance
+                            returnPopupsOnly:(BOOL)returnPopupsOnly
+                              maximumResults:(int)maximumResults
+                                    resolver:(RCTPromiseResolveBlock)resolve
+                                    rejecter:(RCTPromiseRejectBlock)reject  {
+  __weak __typeof__(self) welf = self;
+  [_mapView identifyGraphicsOverlay:_graphicsOverlay
+                        screenPoint:screenPoint
+                          tolerance:tolerance
+                   returnPopupsOnly:returnPopupsOnly
+                     maximumResults:maximumResults
+                         completion:^(AGSIdentifyGraphicsOverlayResult * _Nonnull identifyResult)
+  {
+    if([welf rejectWithError:identifyResult.error rejector:reject]) {
+      return;
+    }
+    
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:identifyResult.graphics.count];
+    for(AGSGraphic *g in identifyResult.graphics) {
+      NSError *error = nil;
+      id geometryJson = [g.geometry toJSON:&error];
+      if([welf rejectWithError:error rejector:reject]) {
+        return;
+      }
+
+      id symbolJson = [g.symbol toJSON:&error];
+      if([welf rejectWithError:error rejector:reject]) {
+        return;
+      }
+      
+      [result addObject:@{
+                         @"geometry": geometryJson,
+                         @"symbol": symbolJson,
+                         @"attributes": g.attributes
+                         }];
+    }
+    resolve(result);
+  }];
+}
+
+-(BOOL)rejectWithError:(NSError *)error rejector:(RCTPromiseRejectBlock)reject {
+  if(error) {
+    reject(@(error.code).stringValue,error.localizedDescription,error);
+    return YES;
+  }
+  return NO;
+}
+
+
+#pragma mark - AGSGeoViewTouchDelegate
+-(void)geoView:(AGSGeoView *)geoView didTapAtScreenPoint:(CGPoint)screenPoint mapPoint:(AGSPoint *)mapPoint {
+  if(!self.onTap) { return; }
+  
+  self.onTap(@{
+               @"screenPoint": @{ @"x": @(screenPoint.x) , @"y": @(screenPoint.y) },
+               @"mapPoint": [mapPoint toJSON:nil]
+               });
+}
 
 @end
