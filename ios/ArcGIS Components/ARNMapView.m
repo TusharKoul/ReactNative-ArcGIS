@@ -22,6 +22,7 @@
   RCTEventDispatcher *_eventDispatcher;
   AGSMapView *_mapView;
   AGSPoint *_viewPointCenter;
+  AGSGraphicsOverlay *_graphicsOverlay;
 }
 
 
@@ -49,6 +50,11 @@
                                   longitude:coord.longitude
                               levelOfDetail:2];
   _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  
+  //inserting a default graphics overlay
+  _graphicsOverlay = [AGSGraphicsOverlay graphicsOverlay];
+  [_mapView.graphicsOverlays addObject:_graphicsOverlay];
+  
   [self addSubview:_mapView];
 
   [self layoutSubviews];
@@ -69,9 +75,11 @@
 
 -(void)setViewPointCenter:(AGSPoint *)center{
   _viewPointCenter = center;
-  if(_mapView) {
-    [_mapView setViewpointCenter:_viewPointCenter completion:nil];
-  }
+  [_mapView setViewpointCenter:_viewPointCenter completion:nil];
+}
+
+-(void)addGraphics:(NSArray <AGSGraphic *> *)graphics {
+  [_graphicsOverlay.graphics addObjectsFromArray:graphics];
 }
 
 

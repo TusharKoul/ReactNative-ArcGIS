@@ -43,7 +43,6 @@ export default class SampleContainer extends Component {
     }
 
     render() {
-        console.log('rendering sample container');
         let {searchData, viewPointCenter} = this.state;
         let searchListView = (searchData) ? this._renderSearchListView() : null;
         return (
@@ -51,7 +50,10 @@ export default class SampleContainer extends Component {
             <TextInput  style={styles.searchInput}
                         placeholder='Search for place'
                         onChangeText={this._onSearchTextChange} />
-            <AGSMapView style={styles.map} viewPointCenter={viewPointCenter}/>
+            <AGSMapView
+                ref={mapView => {this._mapView = mapView; }}
+                style={styles.map}
+                viewPointCenter={viewPointCenter}/>
             {searchListView}
         </View>
         );
@@ -144,8 +146,16 @@ export default class SampleContainer extends Component {
         let topResult = results[0];
         console.log(topResult.displayLocation);
         this.setState({
-            viewPointCenter:topResult.displayLocation
+            viewPointCenter:topResult.displayLocation,
+            searchData:null
         });
+
+        let pointGraphic = {
+            type:"point",
+            coordinates:[topResult.displayLocation],
+        };
+        this._mapView.addGraphics([pointGraphic]);
+
     };
 
     _handleGeocodeFailure = (error) => {

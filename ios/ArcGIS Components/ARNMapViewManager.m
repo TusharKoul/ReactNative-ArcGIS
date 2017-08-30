@@ -10,6 +10,9 @@
 #import "ARNMapView.h"
 #import "RCTConvert+ArcGIS.h"
 #import <React/RCTLog.h>
+#import <React/RCTBridge.h>
+#import <React/UIView+React.h>
+#import <React/RCTUIManager.h>
 
 @implementation ARNMapViewManager
 
@@ -23,13 +26,21 @@ RCT_EXPORT_MODULE()
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(viewPointCenter, AGSPoint, ARNMapView) {
-  RCTLogInfo(@"%@",view);
-  RCTLogInfo(@"%@",defaultView);
   AGSPoint *point;
   if(json) {
     point = [RCTConvert AGSPoint:json];
   }
   [view setViewPointCenter:point];
+}
+
+RCT_EXPORT_METHOD(addGraphics:(nonnull NSNumber *)reactTag
+                  graphics:(nonnull NSArray *)graphics)
+{
+  [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+    ARNMapView *mapView = (ARNMapView *)viewRegistry[reactTag];
+    NSArray <AGSGraphic *> *graphicsToAdd = [RCTConvert AGSGraphics:graphics];
+    [mapView addGraphics:graphicsToAdd];
+  }];
 }
 
 

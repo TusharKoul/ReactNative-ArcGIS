@@ -60,4 +60,50 @@ AGSJsonSerializableConvert(AGSSpatialReference)
   return param;
 }
 
++ (NSArray<AGSGraphic *> *)AGSGraphics:(id)json {
+  NSArray *jsonArray = [self NSArray:json];
+  NSMutableArray *graphics = [NSMutableArray arrayWithCapacity:jsonArray.count];
+  for(id graphicJson in json) {
+    [graphics addObject:[self AGSGraphic:graphicJson]];
+  }
+  return graphics;
+}
+
++ (AGSGraphic *)AGSGraphic:(id)json {
+  json = [self NSDictionary:json];
+  NSString *type = [self NSString:json[@"type"]];
+  if(type == nil) {
+    RCTLogError(@"Graphics needs a type (point, polyline or polygon");
+    return nil;
+  }
+  
+  if ([type isEqualToString:@"point"]) {
+    return [self pointGraphic:json];
+  }
+  else if ([type isEqualToString:@"polyline"]) {
+    
+  }
+  else if ([type isEqualToString:@"polygon"]) {
+    
+  }
+  else {
+    RCTLogError(@"Graphics needs a type (point, polyline or polygon");
+    return nil;
+  }
+
+  return nil;
+}
+
++ (AGSGraphic *)pointGraphic:(NSDictionary *)json {
+  NSDictionary *attributes = [self NSDictionary:json[@"attributes"]];
+  NSArray *coordinates = [self NSArray:json[@"coordinates"]];
+  AGSPoint *point = [self AGSPoint:coordinates[0]];
+  AGSSymbol *symbol = [AGSSimpleMarkerSymbol simpleMarkerSymbolWithStyle:AGSSimpleMarkerSymbolStyleCircle
+                                                                   color:UIColor.greenColor
+                                                                    size:10];
+  AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:point
+                                                 symbol:symbol
+                                             attributes:attributes];
+  return graphic;
+}
 @end

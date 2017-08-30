@@ -14,6 +14,7 @@
 + (AGSPoint *)AGSPoint:(id)json;
 + (AGSGeometry *)AGSGeometry:(id)json;
 + (AGSSpatialReference *)AGSSpatialReference:(id)json;
++ (NSArray<AGSGraphic *> *)AGSGraphics:(id)json;
 
 + (AGSSuggestParameters *)AGSSuggestParameters:(id)json;
 + (AGSGeocodeParameters *)AGSGeocodeParameters:(id)json;
