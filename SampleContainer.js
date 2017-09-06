@@ -9,11 +9,14 @@ import {
     Text,
     NativeModules,
     TouchableHighlight,
-    processColor
 } from 'react-native';
 
 import AGSMapView from './AGSMapView';
-
+import AGSPoint from './ArcGISJavascriptModels/AGSPoint';
+import AGSPolyline from './ArcGISJavascriptModels/AGSPolyline';
+import AGSSimpleMarkerSymbol from './ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
+import AGSSimpleLineSymbol from './ArcGISJavascriptModels/AGSSimpleLineSymbol';
+import AGSSpatialReference from './ArcGISJavascriptModels/AGSSpatialReference';
 
 let {AGSTaskLocator, ARNMapViewManager} = NativeModules;
 export default class SampleContainer extends Component {
@@ -23,18 +26,14 @@ export default class SampleContainer extends Component {
     constructor(props) {
         super(props);
 
+        let esriPoint = AGSPoint.pointWGS84(34.057,-117.196);
+
         // typingTimeout isn't directly responsible for manipulating UI,
         // hence it's not part of the state, rather its a member of the class
         this.typingTimeout = 0;
         this.state = {
             searchData: null,
-            viewPointCenter: {
-                x:-117.196,
-                y:34.057,
-                spatialReference:{
-                    wkid:4326
-                }
-            }
+            viewPointCenter:esriPoint
         };
     }
 
@@ -148,21 +147,12 @@ export default class SampleContainer extends Component {
 
     _handleGeocodeSuccess = (results) => {
         let topResult = results[0];
-        console.log(topResult.displayLocation);
         this.setState({
             viewPointCenter:topResult.displayLocation,
             searchData:null
         });
 
-        let pointGraphic = {
-            type:'point',
-            style: ARNMapViewManager.PointSymbolStyles.AGSSimpleMarkerSymbolStyleDiamond,
-            color:processColor('green'),
-            size:12,
-            coordinates:[topResult.displayLocation],
-        };
-        this._mapView.addGraphics([pointGraphic]);
-
+        this._addPointOnMap(topResult.displayLocation);
     };
 
     _handleGeocodeFailure = (error) => {
@@ -176,6 +166,31 @@ export default class SampleContainer extends Component {
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
     };
+
+    _addPointOnMap = (point) => {
+        let markerSymbol = AGSSimpleMarkerSymbol.symbol(AGSSimpleMarkerSymbol.Style.Triangle, 'rgba(100,34,255,1)', 10);
+        let pointGraphic = {
+            geometry:point,
+            symbol:markerSymbol
+        };
+        this._mapView.addGraphics([pointGraphic]);
+    };
+
+    _addLineOnMap = (point1, point2) => {
+        let lineSymbol = AGSSimpleLineSymbol.symbol(AGSSimpleLineSymbol.Style.DashDot, 'rgba(100,34,255,1)', 10);
+        let line = new AGSPolyline({
+            spatialReference:AGSSpatialReference.WGS84()
+        });
+
+        line.addPoint(point1.x,point1.y);
+        line.addPoint(point2.x,point2.y);
+
+        let lineGraphic = {
+            geometry:line,
+            symbol:lineSymbol
+        };
+        this._mapView.addGraphics([lineGraphic]);
+    }
 
 }
 
