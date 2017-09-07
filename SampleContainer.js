@@ -43,7 +43,7 @@ export default class SampleContainer extends Component {
     }
 
     render() {
-        let {searchData, viewPointCenter} = this.state;
+        let {searchData, viewPointCenter, callout} = this.state;
         let searchListView = (searchData) ? this._renderSearchListView() : null;
         return (
         <View style={styles.container}>
@@ -56,6 +56,7 @@ export default class SampleContainer extends Component {
                 style={styles.map}
                 viewPointCenter={viewPointCenter}
                 onTap={this._onMapTapped}
+                callout={callout}
             />
             {searchListView}
         </View>
@@ -163,8 +164,25 @@ export default class SampleContainer extends Component {
         let tolerance = 10;
         let maxResults = 5;
         this._mapView.identifyGraphicsOverlays(event.screenPoint, tolerance, false, maxResults)
-            .then((res) => console.log(res))
+            .then(this._onIdentifySuccess)
             .catch((err) => console.log(err))
+    };
+
+    _onIdentifySuccess = (result) => {
+        let callout = {};
+        if(result.length === 0) {
+            callout.visible = false;
+        }
+        else {
+            callout.visible = true;
+            callout.point = this.state.viewPointCenter;
+            callout.title = "Graphic Selected";
+            callout.animated = true;
+        }
+
+        this.setState({
+            callout:callout
+        });
     };
 
     _addPointOnMap = (point) => {

@@ -40,33 +40,23 @@ class AGSMapView extends React.Component {
     }
 }
 
+const PointProp = PropTypes.shape({
+    x:PropTypes.number.isRequired,
+    y:PropTypes.number.isRequired,
+    spatialReference:PropTypes.shape({
+        wkid:PropTypes.number
+    })
+});
+
 AGSMapView.propTypes = {
-    viewPointCenter: PropTypes.shape({
-        x:PropTypes.number.isRequired,
-        y:PropTypes.number.isRequired,
-        spatialReference:PropTypes.shape({
-            wkid:PropTypes.number
-        })
-    }),
+    viewPointCenter: PointProp,
     onTap:PropTypes.func,
-    graphics: PropTypes.arrayOf(PropTypes.shape({
-        id:PropTypes.string.isRequired,
-        isVisible:PropTypes.bool,
-        isSelected:PropTypes.bool,
-        symbol:PropTypes.shape({
-            type:PropTypes.string.isRequired,
-            color:PropTypes.string.isRequired,
-            style:PropTypes.string.isRequired,
-            size:PropTypes.number.isRequired,
-        }),
-        coordinates:PropTypes.arrayOf(PropTypes.shape({
-            x:PropTypes.number.isRequired,
-            y:PropTypes.number.isRequired,
-        })),
-        spatialReference:PropTypes.shape({
-            wkid:PropTypes.number
-        })
-    }))
+    callout: PropTypes.shape({
+        visible:PropTypes.boolean,
+        animated:PropTypes.boolean,
+        point:PointProp,
+        label:PropTypes.string
+    })
 };
 
 // ARNMapView is generated from ARNMapViewManager which is defined in Objective C

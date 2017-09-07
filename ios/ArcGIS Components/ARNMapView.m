@@ -22,6 +22,7 @@
   RCTEventDispatcher *_eventDispatcher;
   AGSMapView *_mapView;
   AGSPoint *_viewPointCenter;
+  NSDictionary *_calloutDetails;
   AGSGraphicsOverlay *_graphicsOverlay;
 }
 
@@ -57,6 +58,7 @@
   
   [self addSubview:_mapView];
 
+  [self updateCallout];
   [self layoutSubviews];
 }
 
@@ -76,6 +78,35 @@
 -(void)setViewPointCenter:(AGSPoint *)center{
   _viewPointCenter = center;
   [_mapView setViewpointCenter:_viewPointCenter completion:nil];
+}
+
+-(void)setCalloutDetails:(NSDictionary *)calloutDetails {
+  _calloutDetails = calloutDetails;
+  if (_mapView) {
+    [self updateCallout];
+  }
+}
+
+-(void)updateCallout {
+  if (_calloutDetails == nil)
+    return;
+  
+  if(_calloutDetails[@"visible"]) {
+    if(_calloutDetails[@"title"]) {
+      _mapView.callout.title = _calloutDetails[@"title"];
+    }
+    if(_calloutDetails[@"detail"]) {
+      _mapView.callout.detail = _calloutDetails[@"detail"];
+    }
+    
+    [_mapView.callout showCalloutAt:_calloutDetails[@"point"]
+                       screenOffset:CGPointZero
+                rotateOffsetWithMap:false
+                           animated:_calloutDetails[@"animated"]];
+  }
+  else {
+    [_mapView.callout dismiss];
+  }
 }
 
 -(void)addGraphics:(NSArray <AGSGraphic *> *)graphics {
