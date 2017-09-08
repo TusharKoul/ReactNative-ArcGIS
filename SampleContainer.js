@@ -12,12 +12,13 @@ import {
 } from 'react-native';
 
 import AGSMapView from './ArcGISReactComponents/AGSMapView';
-import AGSCalloutView from './ArcGISReactComponents/AGSCalloutView';
 import AGSPoint from './ArcGISJavascriptModels/AGSPoint';
 import AGSPolyline from './ArcGISJavascriptModels/AGSPolyline';
 import AGSSimpleMarkerSymbol from './ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
 import AGSSimpleLineSymbol from './ArcGISJavascriptModels/AGSSimpleLineSymbol';
 import AGSSpatialReference from './ArcGISJavascriptModels/AGSSpatialReference';
+
+import CustomCalloutView from './CustomCalloutView';
 
 let {AGSLocatorTask} = NativeModules;
 export default class SampleContainer extends Component {
@@ -59,12 +60,9 @@ export default class SampleContainer extends Component {
                         style={styles.map}
                         viewPointCenter={viewPointCenter}
                         onTap={this._onMapTapped}>
-                <AGSCalloutView visible={callout.visible}
-                                      showAtPoint={callout.point}>
-                    <View style={{width:120,height:120,backgroundColor:'red'}}>
-                        <Text> {callout.title} </Text>
-                    </View>
-                </AGSCalloutView>
+                <CustomCalloutView visible={callout.visible}
+                                   showAtPoint={callout.point}
+                                   title={callout.title}/>
             </AGSMapView>
             {searchListView}
         </View>
@@ -182,7 +180,6 @@ export default class SampleContainer extends Component {
     };
 
     _onIdentifySuccess = (result) => {
-        console.log(result);
         let callout = {};
         if(result.length === 0) {
             callout.visible = false;

@@ -21,7 +21,7 @@ class AGSCalloutView extends React.Component {
 }
 
 AGSCalloutView.propTypes = {
-    visible:PropTypes.bool,
+    visible:PropTypes.bool.isRequired,
     title:PropTypes.string,
     detail:PropTypes.string,
     showAtPoint: PropTypes.shape({
@@ -29,7 +29,7 @@ AGSCalloutView.propTypes = {
         y:PropTypes.number.isRequired,
         spatialReference:PropTypes.shape({
             wkid:PropTypes.number
-        })
+        }).isRequired
     })
 };
 

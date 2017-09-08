@@ -45,7 +45,7 @@ const PointProp = PropTypes.shape({
     y:PropTypes.number.isRequired,
     spatialReference:PropTypes.shape({
         wkid:PropTypes.number
-    })
+    }).isRequired
 });
 
 AGSMapView.propTypes = {
