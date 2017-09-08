@@ -11,8 +11,8 @@ import {
     TouchableHighlight,
 } from 'react-native';
 
-import AGSMapView from './AGSMapView';
-import AGSCalloutView from './AGSCalloutView';
+import AGSMapView from './ArcGISReactComponents/AGSMapView';
+import AGSCalloutView from './ArcGISReactComponents/AGSCalloutView';
 import AGSPoint from './ArcGISJavascriptModels/AGSPoint';
 import AGSPolyline from './ArcGISJavascriptModels/AGSPolyline';
 import AGSSimpleMarkerSymbol from './ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
