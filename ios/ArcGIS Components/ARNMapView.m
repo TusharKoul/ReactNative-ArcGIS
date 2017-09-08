@@ -62,7 +62,7 @@
   
   [self addSubview:_mapView];
 
-  [self updateCallout];
+  [self updateCalloutView];
   [self layoutSubviews];
 }
 
