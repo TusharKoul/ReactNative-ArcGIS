@@ -18,7 +18,7 @@
   AGSLocatorTask *_locatorTask;
 }
 
-RCT_EXPORT_MODULE(AGSTaskLocator);
+RCT_EXPORT_MODULE(AGSLocatorTask);
 
 
 RCT_EXPORT_METHOD(initWithURL:(NSString*)urlString) {

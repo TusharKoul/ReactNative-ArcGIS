@@ -19,7 +19,7 @@ import AGSSimpleMarkerSymbol from './ArcGISJavascriptModels/AGSSimpleMarkerSymbo
 import AGSSimpleLineSymbol from './ArcGISJavascriptModels/AGSSimpleLineSymbol';
 import AGSSpatialReference from './ArcGISJavascriptModels/AGSSpatialReference';
 
-let {AGSTaskLocator} = NativeModules;
+let {AGSLocatorTask} = NativeModules;
 export default class SampleContainer extends Component {
 
     // Lifecycle methods ----->
@@ -43,7 +43,7 @@ export default class SampleContainer extends Component {
 
     componentDidMount() {
         // careful of spelling here!
-        AGSTaskLocator.initWithURL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer');
+        AGSLocatorTask.initWithURL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer');
     }
 
     render() {
@@ -120,7 +120,7 @@ export default class SampleContainer extends Component {
                     "city"
                 ]
             };
-            AGSTaskLocator.suggestWithSearchTextAndParameters(text,parameters)
+            AGSLocatorTask.suggestWithSearchTextAndParameters(text,parameters)
                 .then(this._handleLocatorSuggestionsSuccess)
                 .catch(this._handleLocatorSuggestionsFailure);
         }
@@ -149,7 +149,7 @@ export default class SampleContainer extends Component {
     };
 
     _onSearchItemPress = (searchItem) => {
-        AGSTaskLocator.geocodeWithSearchText(searchItem.label)
+        AGSLocatorTask.geocodeWithSearchText(searchItem.label)
             .then(this._handleGeocodeSuccess)
             .catch(this._handleGeocodeFailure);
     };
@@ -182,13 +182,14 @@ export default class SampleContainer extends Component {
     };
 
     _onIdentifySuccess = (result) => {
+        console.log(result);
         let callout = {};
         if(result.length === 0) {
             callout.visible = false;
         }
         else {
             callout.visible = true;
-            callout.point = this.state.viewPointCenter;
+            callout.point = result[0].geometry;
             callout.title = "Graphic Selected";
         }
 
