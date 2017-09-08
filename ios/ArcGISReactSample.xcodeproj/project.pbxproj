@@ -41,6 +41,8 @@
 		DB0984321F4E36370063C932 /* ARNMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0984311F4E36370063C932 /* ARNMapViewManager.m */; };
 		DB3326551F50D57300FCCD21 /* ARNLocatorTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */; };
 		DB4510121F51099B0002BCB2 /* RCTConvert+ArcGIS.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4510111F51099B0002BCB2 /* RCTConvert+ArcGIS.m */; };
+		DBF2A23F1F61DF5000784CBB /* ARNCalloutViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF2A23E1F61DF5000784CBB /* ARNCalloutViewManager.m */; };
+		DBF2A25F1F61DFB500784CBB /* ARNCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF2A25E1F61DFB500784CBB /* ARNCalloutView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -299,6 +301,10 @@
 		DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNLocatorTask.m; sourceTree = "<group>"; };
 		DB4510101F51099B0002BCB2 /* RCTConvert+ArcGIS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+ArcGIS.h"; sourceTree = "<group>"; };
 		DB4510111F51099B0002BCB2 /* RCTConvert+ArcGIS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+ArcGIS.m"; sourceTree = "<group>"; };
+		DBF2A23D1F61DF5000784CBB /* ARNCalloutViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARNCalloutViewManager.h; sourceTree = "<group>"; };
+		DBF2A23E1F61DF5000784CBB /* ARNCalloutViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNCalloutViewManager.m; sourceTree = "<group>"; };
+		DBF2A25D1F61DFB500784CBB /* ARNCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARNCalloutView.h; sourceTree = "<group>"; };
+		DBF2A25E1F61DFB500784CBB /* ARNCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNCalloutView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -562,6 +568,10 @@
 				DB0984311F4E36370063C932 /* ARNMapViewManager.m */,
 				DB3326531F50D57300FCCD21 /* ARNLocatorTask.h */,
 				DB3326541F50D57300FCCD21 /* ARNLocatorTask.m */,
+				DBF2A23D1F61DF5000784CBB /* ARNCalloutViewManager.h */,
+				DBF2A23E1F61DF5000784CBB /* ARNCalloutViewManager.m */,
+				DBF2A25D1F61DFB500784CBB /* ARNCalloutView.h */,
+				DBF2A25E1F61DFB500784CBB /* ARNCalloutView.m */,
 			);
 			name = ArcGIS;
 			path = "ArcGIS Components";
@@ -1081,6 +1091,8 @@
 				DB4510121F51099B0002BCB2 /* RCTConvert+ArcGIS.m in Sources */,
 				DB09842F1F4E35F50063C932 /* ARNMapView.m in Sources */,
 				DB3326551F50D57300FCCD21 /* ARNLocatorTask.m in Sources */,
+				DBF2A23F1F61DF5000784CBB /* ARNCalloutViewManager.m in Sources */,
+				DBF2A25F1F61DFB500784CBB /* ARNCalloutView.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				DB0984321F4E36370063C932 /* ARNMapViewManager.m in Sources */,

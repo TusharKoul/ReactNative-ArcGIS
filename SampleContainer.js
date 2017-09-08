@@ -12,13 +12,14 @@ import {
 } from 'react-native';
 
 import AGSMapView from './AGSMapView';
+import AGSCalloutView from './AGSCalloutView';
 import AGSPoint from './ArcGISJavascriptModels/AGSPoint';
 import AGSPolyline from './ArcGISJavascriptModels/AGSPolyline';
 import AGSSimpleMarkerSymbol from './ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
 import AGSSimpleLineSymbol from './ArcGISJavascriptModels/AGSSimpleLineSymbol';
 import AGSSpatialReference from './ArcGISJavascriptModels/AGSSpatialReference';
 
-let {AGSTaskLocator, ARNMapViewManager} = NativeModules;
+let {AGSTaskLocator} = NativeModules;
 export default class SampleContainer extends Component {
 
     // Lifecycle methods ----->
@@ -33,7 +34,10 @@ export default class SampleContainer extends Component {
         this.typingTimeout = 0;
         this.state = {
             searchData: null,
-            viewPointCenter:esriPoint
+            viewPointCenter:esriPoint,
+            callout: {
+                visible:false,
+            }
         };
     }
 
@@ -49,15 +53,19 @@ export default class SampleContainer extends Component {
         <View style={styles.container}>
             <TextInput  style={styles.searchInput}
                         placeholder='Search for place'
-                        onChangeText={this._onSearchTextChange}
-            />
-            <AGSMapView
-                ref={mapView => {this._mapView = mapView; }}
-                style={styles.map}
-                viewPointCenter={viewPointCenter}
-                onTap={this._onMapTapped}
-                callout={callout}
-            />
+                        onChangeText={this._onSearchTextChange}/>
+
+            <AGSMapView ref={mapView => {this._mapView = mapView; }}
+                        style={styles.map}
+                        viewPointCenter={viewPointCenter}
+                        onTap={this._onMapTapped}>
+                <AGSCalloutView visible={callout.visible}
+                                      showAtPoint={callout.point}>
+                    <View style={{width:120,height:120,backgroundColor:'red'}}>
+                        <Text> {callout.title} </Text>
+                    </View>
+                </AGSCalloutView>
+            </AGSMapView>
             {searchListView}
         </View>
         );
@@ -150,7 +158,12 @@ export default class SampleContainer extends Component {
         let topResult = results[0];
         this.setState({
             viewPointCenter:topResult.displayLocation,
-            searchData:null
+            searchData:null,
+            callout: {
+                visible:true,
+                point:topResult.displayLocation,
+                title:topResult.label,
+            }
         });
 
         this._addPointOnMap(topResult.displayLocation);
@@ -177,7 +190,6 @@ export default class SampleContainer extends Component {
             callout.visible = true;
             callout.point = this.state.viewPointCenter;
             callout.title = "Graphic Selected";
-            callout.animated = true;
         }
 
         this.setState({

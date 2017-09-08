@@ -50,13 +50,7 @@ const PointProp = PropTypes.shape({
 
 AGSMapView.propTypes = {
     viewPointCenter: PointProp,
-    onTap:PropTypes.func,
-    callout: PropTypes.shape({
-        visible:PropTypes.boolean,
-        animated:PropTypes.boolean,
-        point:PointProp,
-        label:PropTypes.string
-    })
+    onTap:PropTypes.func
 };
 
 // ARNMapView is generated from ARNMapViewManager which is defined in Objective C

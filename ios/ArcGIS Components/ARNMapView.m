@@ -13,7 +13,11 @@
 #import <React/UIView+React.h>
 #import <React/RCTLog.h>
 
+#import "ARNCalloutView.h"
+
 @interface ARNMapView ()<AGSGeoViewTouchDelegate>
+
+@property(nonatomic,weak)ARNCalloutView *calloutView;
 
 @end
 
@@ -80,26 +84,27 @@
   [_mapView setViewpointCenter:_viewPointCenter completion:nil];
 }
 
--(void)setCalloutDetails:(NSDictionary *)calloutDetails {
-  _calloutDetails = calloutDetails;
+-(void)setCalloutView:(ARNCalloutView *)calloutView {
+  _calloutView = calloutView;
   if (_mapView) {
-    [self updateCallout];
+    [self updateCalloutView];
   }
 }
 
--(void)updateCallout {
-  if (_calloutDetails == nil)
+-(void)updateCalloutView {
+  if (_calloutView == nil)
     return;
   
-  if(_calloutDetails[@"visible"]) {
-    if(_calloutDetails[@"title"]) {
-      _mapView.callout.title = _calloutDetails[@"title"];
+  if(_calloutView.isVisible) {
+    if (_calloutView.customView) {
+      _mapView.callout.customView = _calloutView.customView;
     }
-    if(_calloutDetails[@"detail"]) {
-      _mapView.callout.detail = _calloutDetails[@"detail"];
+    else {
+      _mapView.callout.title = _calloutView.title;
+      _mapView.callout.detail = _calloutView.detail;
     }
     
-    [_mapView.callout showCalloutAt:_calloutDetails[@"point"]
+    [_mapView.callout showCalloutAt:_calloutView.showAtPoint
                        screenOffset:CGPointZero
                 rotateOffsetWithMap:false
                            animated:_calloutDetails[@"animated"]];
@@ -108,6 +113,18 @@
     [_mapView.callout dismiss];
   }
 }
+
+-(void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex {
+  if ([subview isKindOfClass:[ARNCalloutView class]]){
+    ARNCalloutView *calloutView = (ARNCalloutView *)subview;
+    calloutView.mapDelegate = self;
+    [self setCalloutView:calloutView];
+  }
+  else {
+    [super insertReactSubview:subview atIndex:atIndex];
+  }
+}
+
 
 -(void)addGraphics:(NSArray <AGSGraphic *> *)graphics {
   [_graphicsOverlay.graphics addObjectsFromArray:graphics];

@@ -33,14 +33,6 @@ RCT_CUSTOM_VIEW_PROPERTY(viewPointCenter, AGSPoint, ARNMapView) {
   [view setViewPointCenter:point];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(callout, AGSCallout, ARNMapView) {
-  if(json) {
-    json = [RCTConvert NSDictionary:json];
-    json[@"point"] = [RCTConvert AGSPoint:json[@"point"]];
-    [view setCalloutDetails:[RCTConvert NSDictionary:json]];
-  }
-}
-
 RCT_EXPORT_METHOD(addGraphics:(nonnull NSNumber *)reactTag
                   graphics:(nonnull NSArray *)graphics)
 {
