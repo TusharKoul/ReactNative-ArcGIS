@@ -12,7 +12,7 @@ import {
 
 import AGSCalloutView from '../ArcGISReactComponents/AGSCalloutView';
 
-class CustomCalloutView extends Component {
+export default class CustomCalloutView extends Component {
 
     constructor(props) {
         super(props);
@@ -108,5 +108,3 @@ const styles = StyleSheet.create({
         opacity:0.7
     }
 });
-
-module.exports = CustomCalloutView;
