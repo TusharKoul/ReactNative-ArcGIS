@@ -26,7 +26,6 @@
   RCTEventDispatcher *_eventDispatcher;
   AGSMapView *_mapView;
   AGSPoint *_viewPointCenter;
-  NSDictionary *_calloutDetails;
   AGSGraphicsOverlay *_graphicsOverlay;
 }
 
@@ -107,7 +106,7 @@
     [_mapView.callout showCalloutAt:_calloutView.showAtPoint
                        screenOffset:CGPointZero
                 rotateOffsetWithMap:false
-                           animated:_calloutDetails[@"animated"]];
+                           animated:true];
   }
   else {
     [_mapView.callout dismiss];
