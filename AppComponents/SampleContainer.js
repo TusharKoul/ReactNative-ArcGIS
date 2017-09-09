@@ -4,10 +4,8 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    FlatList,
     Text,
     NativeModules,
-    TouchableHighlight,
 } from 'react-native';
 
 import AGSMapView from '../ArcGISReactComponents/AGSMapView';
@@ -19,6 +17,7 @@ import AGSSpatialReference from '../ArcGISJavascriptModels/AGSSpatialReference';
 
 import CustomCalloutView from './CustomCalloutView';
 import SearchPlaceTextInput from './SearchPlaceTextInput';
+import SearchResultsListView from './SearchResultsListView';
 
 let {AGSLocatorTask} = NativeModules;
 export default class SampleContainer extends Component {
@@ -42,7 +41,6 @@ export default class SampleContainer extends Component {
 
     render() {
         let {searchData, viewPointCenter, callout} = this.state;
-        let searchListView = (searchData) ? this._renderSearchListView() : null;
         return (
         <View style={styles.container}>
 
@@ -56,46 +54,21 @@ export default class SampleContainer extends Component {
                                    showAtPoint={callout.point}
                                    title={callout.title} onSave={this._onSavePressed}/>
             </AGSMapView>
-            {searchListView}
+
+            <SearchResultsListView data={searchData}
+                                   onSearchItemPress={this._onSearchItemPress}/>
         </View>
         );
     }
+
+
+    // Events ----->
 
     _onSearchComplete = (results) => {
         this.setState({
             searchData:results
         });
     };
-
-
-    // List view related ----->
-    _renderSearchListView = () => {
-        return (
-            <View style={styles.searchListContainer}>
-                <FlatList
-                    data={this.state.searchData}
-                    renderItem={this._renderSearchItem}
-                    keyExtractor={this._keyExtractor}
-                    automaticallyAdjustContentInsets={false}
-                />
-            </View>
-        );
-    };
-
-    _keyExtractor = (item, index) => index;
-
-    _renderSearchItem = ({item}) => {
-        return(
-            <TouchableHighlight onPress={() => this._onSearchItemPress(item)}>
-                <Text style={styles.searchItem}>
-                    {item.label}
-                </Text>
-            </TouchableHighlight>
-        );
-    };
-
-
-    // Events ----->
 
     _onSearchItemPress = (searchItem) => {
         AGSLocatorTask.geocodeWithSearchText(searchItem.label)
@@ -185,28 +158,5 @@ const styles = StyleSheet.create({
     },
     map:{
         flex:1
-    },
-    searchInput:{
-        margin:5,
-        borderColor: 'lightgray',
-        borderWidth: 1,
-        backgroundColor: 'white',
-        borderRadius: 5,
-        height: 30,
-        paddingLeft: 10,
-        paddingRight: 10
-    },
-    searchListContainer:{
-        position: 'absolute',
-        top:40,
-        left:10,
-        right:10,
-        height: 130,
-        backgroundColor:'lightgray'
-    },
-    searchItem:{
-        padding:10,
-        marginBottom:2,
-        backgroundColor:'whitesmoke'
     }
 });
