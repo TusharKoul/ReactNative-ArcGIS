@@ -10,7 +10,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import AGSCalloutView from './ArcGISReactComponents/AGSCalloutView';
+import AGSCalloutView from '../ArcGISReactComponents/AGSCalloutView';
 
 class CustomCalloutView extends Component {
 

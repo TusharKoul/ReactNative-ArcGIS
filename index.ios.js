@@ -11,7 +11,7 @@ import {
   NavigatorIOS
 } from 'react-native';
 
-import SampleContainer from './SampleContainer'
+import SampleContainer from './AppComponents/SampleContainer'
 
 export default class ArcGISReactSample extends Component {
 

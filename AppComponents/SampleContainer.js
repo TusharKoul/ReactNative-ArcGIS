@@ -11,12 +11,12 @@ import {
     TouchableHighlight,
 } from 'react-native';
 
-import AGSMapView from './ArcGISReactComponents/AGSMapView';
-import AGSPoint from './ArcGISJavascriptModels/AGSPoint';
-import AGSPolyline from './ArcGISJavascriptModels/AGSPolyline';
-import AGSSimpleMarkerSymbol from './ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
-import AGSSimpleLineSymbol from './ArcGISJavascriptModels/AGSSimpleLineSymbol';
-import AGSSpatialReference from './ArcGISJavascriptModels/AGSSpatialReference';
+import AGSMapView from '../ArcGISReactComponents/AGSMapView';
+import AGSPoint from '../ArcGISJavascriptModels/AGSPoint';
+import AGSPolyline from '../ArcGISJavascriptModels/AGSPolyline';
+import AGSSimpleMarkerSymbol from '../ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
+import AGSSimpleLineSymbol from '../ArcGISJavascriptModels/AGSSimpleLineSymbol';
+import AGSSpatialReference from '../ArcGISJavascriptModels/AGSSpatialReference';
 
 import CustomCalloutView from './CustomCalloutView';
 
@@ -62,7 +62,7 @@ export default class SampleContainer extends Component {
                         onTap={this._onMapTapped}>
                 <CustomCalloutView visible={callout.visible}
                                    showAtPoint={callout.point}
-                                   title={callout.title}/>
+                                   title={callout.title} onSave={this._onSavePressed}/>
             </AGSMapView>
             {searchListView}
         </View>
@@ -218,6 +218,10 @@ export default class SampleContainer extends Component {
             symbol:lineSymbol
         };
         this._mapView.addGraphics([lineGraphic]);
+    };
+
+    _onSavePressed = (event) => {
+        console.log(event);
     }
 
 }
