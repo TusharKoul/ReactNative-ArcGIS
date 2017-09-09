@@ -128,7 +128,14 @@ export default class SampleContainer extends Component {
     };
 
     _addPointOnMap = (placeData) => {
-        let markerSymbol = AGSSimpleMarkerSymbol.symbol(AGSSimpleMarkerSymbol.Style.Triangle, 'rgba(100,34,255,1)', 10);
+        let markerSymbol;
+        if(placeData.isVisited) {
+            markerSymbol = AGSSimpleMarkerSymbol.symbol(AGSSimpleMarkerSymbol.Style.Triangle, 'rgba(100,34,255,1)', 10);
+        }
+        else if(placeData.isWishlist) {
+            markerSymbol = AGSSimpleMarkerSymbol.symbol(AGSSimpleMarkerSymbol.Style.Diamond, 'red', 10);
+        }
+
         let pointGraphic = {
             geometry:placeData.locationPoint,
             symbol:markerSymbol,
