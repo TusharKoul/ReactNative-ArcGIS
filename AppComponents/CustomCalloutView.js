@@ -103,7 +103,7 @@ export default class CustomCalloutView extends Component {
     };
 
     _showFlightPathPressed = (event) => {
-        this.props.onShowFlightPath && this.props.onShowFlightPath(event);
+        this.props.onShowFlightPath && this.props.onShowFlightPath(this.props.placeData);
     };
 }
 

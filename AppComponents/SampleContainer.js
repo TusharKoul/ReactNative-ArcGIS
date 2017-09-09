@@ -29,6 +29,8 @@ export default class SampleContainer extends Component {
 
         let esriPoint = AGSPoint.pointWGS84(34.057,-117.196);
 
+        this.places = [];
+
         this.state = {
             searchData: null,
             viewPointCenter:esriPoint,
@@ -133,10 +135,11 @@ export default class SampleContainer extends Component {
             attributes:placeData
         };
         this._mapView.addGraphics([pointGraphic]);
+        this.places.push(placeData);
     };
 
     _addLineOnMap = (point1, point2) => {
-        let lineSymbol = AGSSimpleLineSymbol.symbol(AGSSimpleLineSymbol.Style.DashDot, 'rgba(100,34,255,1)', 10);
+        let lineSymbol = AGSSimpleLineSymbol.symbol(AGSSimpleLineSymbol.Style.DashDot, 'green', 3);
         let line = new AGSPolyline({
             spatialReference:AGSSpatialReference.WGS84()
         });
@@ -154,17 +157,24 @@ export default class SampleContainer extends Component {
     _onSavePressed = (placeData) => {
         this._addPointOnMap(placeData);
 
+        this._hideCallout();
+    };
+
+    _onShowFlightPath = (fromPlace) => {
+        this.places.forEach((place) => {
+            this._addLineOnMap(fromPlace.locationPoint, place.locationPoint);
+        });
+
+        this._hideCallout();
+    };
+
+    _hideCallout = () => {
         this.setState({
             callout:{
                 visible:false
             }
         });
-    };
-
-    _onShowFlightPath = (event) => {
-        console.log(event);
     }
-
 }
 
 const styles = StyleSheet.create({
