@@ -16,28 +16,43 @@ export default class CustomCalloutView extends Component {
 
     constructor(props) {
         super(props);
+        this.isVisited = false;
+        this.isWishlist = false;
         this.state = {
             saveDisabled: true
         };
     }
 
     render() {
-        let {visible, showAtPoint, title} = this.props;
+        let {visible, placeData} = this.props;
+        let point = placeData ? placeData.locationPoint : null;
         return (
         <AGSCalloutView visible={visible}
-                        showAtPoint={showAtPoint}>
-            {this._renderCustomSubview(title)}
+                        showAtPoint={point}>
+            {this._renderCustomSubview(placeData)}
         </AGSCalloutView>
         );
     }
 
-    _renderCustomSubview = (title) => {
+    _renderCustomSubview = (placeData) => {
+        let index = -1;
+        let placeName = "";
+        if (placeData) {
+            if(placeData.isVisited) {
+                index = 0;
+            }
+            else if(placeData.isWishlist) {
+                index = 1;
+            }
+            placeName = placeData.placeName;
+        }
+
         return(
         <View style={styles.calloutSubview}>
-            <Text style={styles.title}> {title} </Text>
+            <Text style={styles.title}> {placeName} </Text>
             <SegmentedControlIOS
                 values={["I've been here", "I want to go here"]}
-                selectedIndex={-1}
+                selectedIndex={index}
                 onChange={this._segmentedControlSelectionChanged}
             />
             {this._renderButton()}
@@ -70,18 +85,28 @@ export default class CustomCalloutView extends Component {
     _segmentedControlSelectionChanged = (event) => {
         let selectedIndex = event.nativeEvent.selectedSegmentIndex;
         if (selectedIndex < 0) { return; }
+
+        this.isVisited = (selectedIndex === 0);
+        this.isWishlist = (selectedIndex === 1);
         this.setState({
-            saveDisabled:false
+            saveDisabled:false,
         });
     };
 
     _saveButtonPressed = (event) => {
-        this.props.onSave(event);
+        let {placeData} = this.props;
+        placeData.isVisited = this.isVisited;
+        placeData.isWishlist = this.isWishlist;
+        this.props.onSave(placeData);
     };
 }
 
 CustomCalloutView.propTypes = {
-    ...AGSCalloutView.propTypes,
+    placeData:PropTypes.shape({
+        isVisited:PropTypes.bool,
+        isWishlist:PropTypes.bool,
+        placeName:PropTypes.string,
+    }),
     onSave:PropTypes.func
 };
 

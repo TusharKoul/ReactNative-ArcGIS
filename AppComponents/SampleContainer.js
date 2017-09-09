@@ -51,8 +51,8 @@ export default class SampleContainer extends Component {
                         viewPointCenter={viewPointCenter}
                         onTap={this._onMapTapped}>
                 <CustomCalloutView visible={callout.visible}
-                                   showAtPoint={callout.point}
-                                   title={callout.title} onSave={this._onSavePressed}/>
+                                   placeData={callout.placeData}
+                                   onSave={this._onSavePressed}/>
             </AGSMapView>
 
             <SearchResultsListView data={searchData}
@@ -78,17 +78,20 @@ export default class SampleContainer extends Component {
 
     _handleGeocodeSuccess = (results) => {
         let topResult = results[0];
+
+        let callout = {
+            visible:true,
+            placeData:{
+                placeName:topResult.label,
+                locationPoint:topResult.displayLocation
+            },
+        };
+
         this.setState({
             viewPointCenter:topResult.displayLocation,
             searchData:null,
-            callout: {
-                visible:true,
-                point:topResult.displayLocation,
-                title:topResult.label,
-            }
+            callout:callout
         });
-
-        this._addPointOnMap(topResult.displayLocation);
     };
 
     _handleGeocodeFailure = (error) => {
@@ -103,15 +106,15 @@ export default class SampleContainer extends Component {
             .catch((err) => console.log(err))
     };
 
-    _onIdentifySuccess = (result) => {
+    _onIdentifySuccess = (results) => {
         let callout = {};
-        if(result.length === 0) {
+        if(results.length === 0) {
             callout.visible = false;
         }
         else {
+            let selectedGraphic = results[0];
             callout.visible = true;
-            callout.point = result[0].geometry;
-            callout.title = "Graphic Selected";
+            callout.placeData = selectedGraphic.attributes;
         }
 
         this.setState({
@@ -119,11 +122,12 @@ export default class SampleContainer extends Component {
         });
     };
 
-    _addPointOnMap = (point) => {
+    _addPointOnMap = (placeData) => {
         let markerSymbol = AGSSimpleMarkerSymbol.symbol(AGSSimpleMarkerSymbol.Style.Triangle, 'rgba(100,34,255,1)', 10);
         let pointGraphic = {
-            geometry:point,
-            symbol:markerSymbol
+            geometry:placeData.locationPoint,
+            symbol:markerSymbol,
+            attributes:placeData
         };
         this._mapView.addGraphics([pointGraphic]);
     };
@@ -144,8 +148,14 @@ export default class SampleContainer extends Component {
         this._mapView.addGraphics([lineGraphic]);
     };
 
-    _onSavePressed = (event) => {
-        console.log(event);
+    _onSavePressed = (placeData) => {
+        this._addPointOnMap(placeData);
+
+        this.setState({
+            callout:{
+                visible:false
+            }
+        });
     }
 
 }
