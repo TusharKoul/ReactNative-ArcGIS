@@ -47,6 +47,8 @@ export default class CustomCalloutView extends Component {
             placeName = placeData.placeName;
         }
 
+        let saveButton = this._renderButton("Save",this.state.saveDisabled,this._saveButtonPressed);
+        let flightButton = this.props.isFlightsButtonVisible ? this._renderButton("Show Flight Path",false,this._showFlightPathPressed) : null;
         return(
         <View style={styles.calloutSubview}>
             <Text style={styles.title}> {placeName} </Text>
@@ -55,24 +57,24 @@ export default class CustomCalloutView extends Component {
                 selectedIndex={index}
                 onChange={this._segmentedControlSelectionChanged}
             />
-            {this._renderButton()}
+            {flightButton}
+            {saveButton}
         </View>
         );
     };
 
-    _renderButton = () => {
-        let {saveDisabled} = this.state;
+    _renderButton = (title,disabled,onPress) => {
         let buttonTextStyle = [styles.buttonText];
-        if (saveDisabled) {
+        if (disabled) {
             buttonTextStyle.push(styles.buttonTextDisabled);
         }
 
         return (
-        <TouchableOpacity disabled={saveDisabled}
-                          onPress={this._saveButtonPressed}
+        <TouchableOpacity disabled={disabled}
+                          onPress={onPress}
                           underlayColor='blue'>
             <View style={styles.button}>
-                <Text style={buttonTextStyle}>Save</Text>
+                <Text style={buttonTextStyle}>{title}</Text>
             </View>
         </TouchableOpacity>
         );
@@ -97,7 +99,11 @@ export default class CustomCalloutView extends Component {
         let {placeData} = this.props;
         placeData.isVisited = this.isVisited;
         placeData.isWishlist = this.isWishlist;
-        this.props.onSave(placeData);
+        this.props.onSave && this.props.onSave(placeData);
+    };
+
+    _showFlightPathPressed = (event) => {
+        this.props.onShowFlightPath && this.props.onShowFlightPath(event);
     };
 }
 
@@ -107,7 +113,9 @@ CustomCalloutView.propTypes = {
         isWishlist:PropTypes.bool,
         placeName:PropTypes.string,
     }),
-    onSave:PropTypes.func
+    isFlightsButtonVisible:PropTypes.bool,
+    onSave:PropTypes.func,
+    onShowFlightPath:PropTypes.func
 };
 
 const styles = StyleSheet.create({

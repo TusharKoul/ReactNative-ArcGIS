@@ -52,7 +52,9 @@ export default class SampleContainer extends Component {
                         onTap={this._onMapTapped}>
                 <CustomCalloutView visible={callout.visible}
                                    placeData={callout.placeData}
-                                   onSave={this._onSavePressed}/>
+                                   isFlightsButtonVisible={callout.isFlightsButtonVisible}
+                                   onSave={this._onSavePressed}
+                                   onShowFlightPath={this._onShowFlightPath}/>
             </AGSMapView>
 
             <SearchResultsListView data={searchData}
@@ -114,6 +116,7 @@ export default class SampleContainer extends Component {
         else {
             let selectedGraphic = results[0];
             callout.visible = true;
+            callout.isFlightsButtonVisible = true;
             callout.placeData = selectedGraphic.attributes;
         }
 
@@ -156,6 +159,10 @@ export default class SampleContainer extends Component {
                 visible:false
             }
         });
+    };
+
+    _onShowFlightPath = (event) => {
+        console.log(event);
     }
 
 }
