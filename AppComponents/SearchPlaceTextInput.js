@@ -75,7 +75,7 @@ export default class SearchPlaceTextInput extends Component {
     };
 
     _setSearchResults = (searchResults) => {
-        this.props.onSearchComplete(searchResults);
+        this.props.onSearchComplete && this.props.onSearchComplete(searchResults);
     }
 }
 
