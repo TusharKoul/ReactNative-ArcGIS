@@ -76,12 +76,13 @@ class CustomCalloutView extends Component {
     };
 
     _saveButtonPressed = (event) => {
-
+        this.props.onSave(event);
     };
 }
 
 CustomCalloutView.propTypes = {
     ...AGSCalloutView.propTypes,
+    onSave:PropTypes.func
 };
 
 const styles = StyleSheet.create({
