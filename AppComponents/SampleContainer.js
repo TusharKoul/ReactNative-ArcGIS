@@ -18,7 +18,7 @@ import AGSSimpleLineSymbol from '../ArcGISJavascriptModels/AGSSimpleLineSymbol';
 import AGSSpatialReference from '../ArcGISJavascriptModels/AGSSpatialReference';
 
 import CustomCalloutView from './CustomCalloutView';
-import SearchCityTextView from './SearchCityTextView';
+import SearchPlaceTextInput from './SearchPlaceTextInput';
 
 let {AGSLocatorTask} = NativeModules;
 export default class SampleContainer extends Component {
@@ -46,7 +46,7 @@ export default class SampleContainer extends Component {
         return (
         <View style={styles.container}>
 
-            <SearchCityTextView onSearchComplete={this._onSearchComplete}/>
+            <SearchPlaceTextInput onSearchComplete={this._onSearchComplete}/>
 
             <AGSMapView ref={mapView => {this._mapView = mapView; }}
                         style={styles.map}
