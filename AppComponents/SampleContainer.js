@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    TextInput,
     FlatList,
     Text,
     NativeModules,
@@ -19,6 +18,7 @@ import AGSSimpleLineSymbol from '../ArcGISJavascriptModels/AGSSimpleLineSymbol';
 import AGSSpatialReference from '../ArcGISJavascriptModels/AGSSpatialReference';
 
 import CustomCalloutView from './CustomCalloutView';
+import SearchCityTextView from './SearchCityTextView';
 
 let {AGSLocatorTask} = NativeModules;
 export default class SampleContainer extends Component {
@@ -30,9 +30,6 @@ export default class SampleContainer extends Component {
 
         let esriPoint = AGSPoint.pointWGS84(34.057,-117.196);
 
-        // typingTimeout isn't directly responsible for manipulating UI,
-        // hence it's not part of the state, rather its a member of the class
-        this.typingTimeout = 0;
         this.state = {
             searchData: null,
             viewPointCenter:esriPoint,
@@ -42,19 +39,14 @@ export default class SampleContainer extends Component {
         };
     }
 
-    componentDidMount() {
-        // careful of spelling here!
-        AGSLocatorTask.initWithURL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer');
-    }
 
     render() {
         let {searchData, viewPointCenter, callout} = this.state;
         let searchListView = (searchData) ? this._renderSearchListView() : null;
         return (
         <View style={styles.container}>
-            <TextInput  style={styles.searchInput}
-                        placeholder='Search for place'
-                        onChangeText={this._onSearchTextChange}/>
+
+            <SearchCityTextView onSearchComplete={this._onSearchComplete}/>
 
             <AGSMapView ref={mapView => {this._mapView = mapView; }}
                         style={styles.map}
@@ -68,6 +60,12 @@ export default class SampleContainer extends Component {
         </View>
         );
     }
+
+    _onSearchComplete = (results) => {
+        this.setState({
+            searchData:results
+        });
+    };
 
 
     // List view related ----->
@@ -98,53 +96,6 @@ export default class SampleContainer extends Component {
 
 
     // Events ----->
-
-    _onSearchTextChange = (text) => {
-        if(this.typingTimeout) {
-            clearTimeout(this.typingTimeout);
-        }
-
-        // search after 1 sec of typing
-        this.typingTimeout = setTimeout(()=> {
-            this._fetchPlaceSuggestions(text);
-        },500);
-    };
-
-    _fetchPlaceSuggestions = (text) => {
-        if(text.trim()) {
-            let parameters = {
-                "maxResults": 5,
-                "categories":[
-                    "city"
-                ]
-            };
-            AGSLocatorTask.suggestWithSearchTextAndParameters(text,parameters)
-                .then(this._handleLocatorSuggestionsSuccess)
-                .catch(this._handleLocatorSuggestionsFailure);
-        }
-        else {
-            this.setState({
-                searchData:null
-            });
-        }
-    };
-
-    _handleLocatorSuggestionsSuccess = (results) => {
-        this.setState({
-            searchData:results
-        });
-    };
-
-    _handleLocatorSuggestionsFailure = (error) => {
-        if(parseInt(error.code) === 1) {
-            console.error(error);
-        }
-        else {
-            this.setState({
-                searchData:[error.message]
-            });
-        }
-    };
 
     _onSearchItemPress = (searchItem) => {
         AGSLocatorTask.geocodeWithSearchText(searchItem.label)
