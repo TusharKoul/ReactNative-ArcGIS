@@ -1,5 +1,5 @@
 //
-//  ARNMapView.h
+//  RCTMapView.h
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 8/23/17.
@@ -16,7 +16,7 @@
 @class RCTCalloutView;
 
 
-@interface ARNMapView : RCTView
+@interface RCTMapView : RCTView
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher;
 

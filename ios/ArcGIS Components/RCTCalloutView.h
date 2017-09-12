@@ -8,7 +8,7 @@
 
 #import <React/RCTView.h>
 @class AGSPoint;
-@class ARNMapView;
+@class RCTMapView;
 
 @interface RCTCalloutView : RCTView
 
@@ -20,6 +20,6 @@
 
 @property(nonatomic, weak) UIView *customView;
 
-@property(nonatomic, weak) ARNMapView *mapDelegate;
+@property(nonatomic, weak) RCTMapView *mapDelegate;
 
 @end

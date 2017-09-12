@@ -1,12 +1,12 @@
 
-//  ARNMapView.m
+//  RCTMapView.m
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 8/23/17.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
-#import "ARNMapView.h"
+#import "RCTMapView.h"
 #import <ArcGIS/ArcGIS.h>
 
 #import <React/RCTBridgeModule.h>
@@ -15,13 +15,13 @@
 
 #import "RCTCalloutView.h"
 
-@interface ARNMapView ()<AGSGeoViewTouchDelegate>
+@interface RCTMapView ()<AGSGeoViewTouchDelegate>
 
 @property(nonatomic,weak)RCTCalloutView *calloutView;
 
 @end
 
-@implementation ARNMapView
+@implementation RCTMapView
 {
   RCTEventDispatcher *_eventDispatcher;
   AGSMapView *_mapView;

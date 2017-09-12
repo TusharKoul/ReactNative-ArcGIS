@@ -7,7 +7,7 @@
 //
 
 #import "ARNMapViewManager.h"
-#import "ARNMapView.h"
+#import "RCTMapView.h"
 #import "RCTConvert+ArcGIS.h"
 #import <React/RCTLog.h>
 #import <React/RCTBridge.h>
@@ -22,10 +22,10 @@ RCT_EXPORT_MODULE()
 
 
 -(UIView *)view {
-  return [[ARNMapView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+  return [[RCTMapView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(viewPointCenter, AGSPoint, ARNMapView) {
+RCT_CUSTOM_VIEW_PROPERTY(viewPointCenter, AGSPoint, RCTMapView) {
   AGSPoint *point;
   if(json) {
     point = [RCTConvert AGSPoint:json];
@@ -37,7 +37,7 @@ RCT_EXPORT_METHOD(addGraphics:(nonnull NSNumber *)reactTag
                   graphics:(nonnull NSArray *)graphics)
 {
   [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-    ARNMapView *mapView = (ARNMapView *)viewRegistry[reactTag];
+    RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
     NSArray <AGSGraphic *> *graphicsToAdd = [RCTConvert AGSGraphics:graphics];
     [mapView addGraphics:graphicsToAdd];
   }];
@@ -52,7 +52,7 @@ RCT_EXPORT_METHOD(identifyGraphicsOverlays:(nonnull NSNumber *)reactTag
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
   [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-    ARNMapView *mapView = (ARNMapView *)viewRegistry[reactTag];
+    RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
     [mapView identifyGraphicsOverlaysAtScreenPoint:screenPoint
                                          tolerance:tolerance
                                   returnPopupsOnly:returnPopupsOnly

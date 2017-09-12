@@ -8,7 +8,7 @@
 
 #import "RCTCalloutView.h"
 #import <React/UIView+React.h>
-#import "ARNMapView.h"
+#import "RCTMapView.h"
 
 @implementation RCTCalloutView
 

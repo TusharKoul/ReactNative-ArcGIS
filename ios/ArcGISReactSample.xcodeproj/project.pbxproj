@@ -37,7 +37,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		66490EBAADA01ACBCC2627DD /* libPods-ArcGISReactSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C83E87030E755B0BE6DFD92 /* libPods-ArcGISReactSample.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		DB09842F1F4E35F50063C932 /* ARNMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB09842E1F4E35F50063C932 /* ARNMapView.m */; };
+		DB09842F1F4E35F50063C932 /* RCTMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB09842E1F4E35F50063C932 /* RCTMapView.m */; };
 		DB0984321F4E36370063C932 /* ARNMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0984311F4E36370063C932 /* ARNMapViewManager.m */; };
 		DB3326551F50D57300FCCD21 /* RCTLocatorTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3326541F50D57300FCCD21 /* RCTLocatorTask.m */; };
 		DB4510121F51099B0002BCB2 /* RCTConvert+ArcGIS.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4510111F51099B0002BCB2 /* RCTConvert+ArcGIS.m */; };
@@ -293,8 +293,8 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		CF9C0F2F545BF9A40714F375 /* Pods-ArcGISReactSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcGISReactSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArcGISReactSample/Pods-ArcGISReactSample.debug.xcconfig"; sourceTree = "<group>"; };
-		DB09842D1F4E35F50063C932 /* ARNMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARNMapView.h; sourceTree = "<group>"; };
-		DB09842E1F4E35F50063C932 /* ARNMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNMapView.m; sourceTree = "<group>"; };
+		DB09842D1F4E35F50063C932 /* RCTMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTMapView.h; sourceTree = "<group>"; };
+		DB09842E1F4E35F50063C932 /* RCTMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTMapView.m; sourceTree = "<group>"; };
 		DB0984301F4E36370063C932 /* ARNMapViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARNMapViewManager.h; sourceTree = "<group>"; };
 		DB0984311F4E36370063C932 /* ARNMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNMapViewManager.m; sourceTree = "<group>"; };
 		DB3326531F50D57300FCCD21 /* RCTLocatorTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTLocatorTask.h; sourceTree = "<group>"; };
@@ -562,8 +562,8 @@
 			isa = PBXGroup;
 			children = (
 				DB45100F1F51096C0002BCB2 /* Categories */,
-				DB09842D1F4E35F50063C932 /* ARNMapView.h */,
-				DB09842E1F4E35F50063C932 /* ARNMapView.m */,
+				DB09842D1F4E35F50063C932 /* RCTMapView.h */,
+				DB09842E1F4E35F50063C932 /* RCTMapView.m */,
 				DB0984301F4E36370063C932 /* ARNMapViewManager.h */,
 				DB0984311F4E36370063C932 /* ARNMapViewManager.m */,
 				DB3326531F50D57300FCCD21 /* RCTLocatorTask.h */,
@@ -1089,7 +1089,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB4510121F51099B0002BCB2 /* RCTConvert+ArcGIS.m in Sources */,
-				DB09842F1F4E35F50063C932 /* ARNMapView.m in Sources */,
+				DB09842F1F4E35F50063C932 /* RCTMapView.m in Sources */,
 				DB3326551F50D57300FCCD21 /* RCTLocatorTask.m in Sources */,
 				DBF2A23F1F61DF5000784CBB /* RCTCalloutViewManager.m in Sources */,
 				DBF2A25F1F61DFB500784CBB /* RCTCalloutView.m in Sources */,
