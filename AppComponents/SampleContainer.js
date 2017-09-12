@@ -8,7 +8,7 @@ import {
     NativeModules,
 } from 'react-native';
 
-import AGSMapView from '../ArcGISReactComponents/AGSMapView';
+import MapView from '../ArcGISReactComponents/MapView';
 import AGSPoint from '../ArcGISJavascriptModels/AGSPoint';
 import AGSPolyline from '../ArcGISJavascriptModels/AGSPolyline';
 import AGSSimpleMarkerSymbol from '../ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
@@ -53,7 +53,7 @@ export default class SampleContainer extends Component {
 
             <SearchPlaceTextInput onSearchComplete={this._onSearchComplete}/>
 
-            <AGSMapView ref={mapView => {this._mapView = mapView; }}
+            <MapView ref={mapView => {this._mapView = mapView; }}
                         style={styles.map}
                         viewPointCenter={viewPointCenter}
                         onTap={this._onMapTapped}>
@@ -62,7 +62,7 @@ export default class SampleContainer extends Component {
                                    isFlightsButtonVisible={callout.isFlightsButtonVisible}
                                    onSave={this._onSavePressed}
                                    onShowFlightPath={this._onShowFlightPath}/>
-            </AGSMapView>
+            </MapView>
 
             <SearchResultsListView data={searchData}
                                    onSearchItemPress={this._onSearchItemPress}/>

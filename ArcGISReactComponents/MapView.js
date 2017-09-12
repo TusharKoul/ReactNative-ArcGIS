@@ -9,7 +9,7 @@ import {
 
 const { ARNMapViewManager } = NativeModules;
 
-class AGSMapView extends React.Component {
+class MapView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +18,7 @@ class AGSMapView extends React.Component {
 
     render() {
         return (
-        <ARNMapView
+        <RCTMapView
             {...this.props}
             onTap={this._onTap}
         />
@@ -48,11 +48,11 @@ const PointProp = PropTypes.shape({
     }).isRequired
 });
 
-AGSMapView.propTypes = {
+MapView.propTypes = {
     viewPointCenter: PointProp,
     onTap:PropTypes.func
 };
 
 // ARNMapView is generated from ARNMapViewManager which is defined in Objective C
-let ARNMapView = requireNativeComponent('ARNMapView',AGSMapView);
-module.exports = AGSMapView;
+let RCTMapView = requireNativeComponent('ARNMapView',MapView);
+module.exports = MapView;
