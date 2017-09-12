@@ -13,7 +13,7 @@
 @class AGSPoint;
 @class AGSGraphic;
 @class AGSCallout;
-@class ARNCalloutView;
+@class RCTCalloutView;
 
 
 @interface ARNMapView : RCTView
@@ -23,7 +23,7 @@
 // when we define RCT_CUSTOM_PROPERTY in view manager we specify a view
 // The property should be defined on the view also as so-
 - (void)setViewPointCenter:(AGSPoint *)center;
-- (void)setCalloutView:(ARNCalloutView *)calloutView;
+- (void)setCalloutView:(RCTCalloutView *)calloutView;
 
 - (void)addGraphics:(NSArray <AGSGraphic *> *)graphics;
 

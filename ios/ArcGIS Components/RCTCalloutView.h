@@ -1,5 +1,5 @@
 //
-//  ARNCalloutView.h
+//  RCTCalloutView.h
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 9/7/17.
@@ -10,7 +10,7 @@
 @class AGSPoint;
 @class ARNMapView;
 
-@interface ARNCalloutView : RCTView
+@interface RCTCalloutView : RCTView
 
 @property(nonatomic, getter=isVisible) BOOL visible;
 

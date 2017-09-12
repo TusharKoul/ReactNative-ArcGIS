@@ -33,6 +33,6 @@ CalloutView.propTypes = {
     })
 };
 
-// ARNCalloutView is generated from RCTCalloutViewManager which is defined in Objective C
+// RCTCalloutView is generated from RCTCalloutViewManager which is defined in Objective C
 let RCTCalloutView = requireNativeComponent('RCTCalloutView',CalloutView);
 module.exports = CalloutView;

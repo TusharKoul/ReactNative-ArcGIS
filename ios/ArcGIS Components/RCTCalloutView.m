@@ -1,16 +1,16 @@
 //
-//  ARNCalloutView.m
+//  RCTCalloutView.m
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 9/7/17.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
-#import "ARNCalloutView.h"
+#import "RCTCalloutView.h"
 #import <React/UIView+React.h>
 #import "ARNMapView.h"
 
-@implementation ARNCalloutView
+@implementation RCTCalloutView
 
 -(void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex {
   [super insertReactSubview:subview atIndex:atIndex];

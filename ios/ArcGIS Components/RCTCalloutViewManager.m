@@ -9,7 +9,7 @@
 //
 
 #import "RCTCalloutViewManager.h"
-#import "ARNCalloutView.h"
+#import "RCTCalloutView.h"
 
 #import "RCTConvert+ArcGIS.h"
 
@@ -18,14 +18,14 @@
 RCT_EXPORT_MODULE()
 
 -(UIView *)view{
-  return [[ARNCalloutView alloc] init];
+  return [[RCTCalloutView alloc] init];
 }
 
 RCT_EXPORT_VIEW_PROPERTY(visible, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(title, NSString);
 RCT_EXPORT_VIEW_PROPERTY(detail, NSString);
 
-RCT_CUSTOM_VIEW_PROPERTY(showAtPoint, AGSPoint, ARNCalloutView) {
+RCT_CUSTOM_VIEW_PROPERTY(showAtPoint, AGSPoint, RCTCalloutView) {
   AGSPoint *point;
   if(json) {
     point = [RCTConvert AGSPoint:json];

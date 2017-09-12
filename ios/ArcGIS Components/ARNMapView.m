@@ -13,11 +13,11 @@
 #import <React/UIView+React.h>
 #import <React/RCTLog.h>
 
-#import "ARNCalloutView.h"
+#import "RCTCalloutView.h"
 
 @interface ARNMapView ()<AGSGeoViewTouchDelegate>
 
-@property(nonatomic,weak)ARNCalloutView *calloutView;
+@property(nonatomic,weak)RCTCalloutView *calloutView;
 
 @end
 
@@ -83,7 +83,7 @@
   [_mapView setViewpointCenter:_viewPointCenter completion:nil];
 }
 
--(void)setCalloutView:(ARNCalloutView *)calloutView {
+-(void)setCalloutView:(RCTCalloutView *)calloutView {
   _calloutView = calloutView;
   if (_mapView) {
     [self updateCalloutView];
@@ -114,8 +114,8 @@
 }
 
 -(void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex {
-  if ([subview isKindOfClass:[ARNCalloutView class]]){
-    ARNCalloutView *calloutView = (ARNCalloutView *)subview;
+  if ([subview isKindOfClass:[RCTCalloutView class]]){
+    RCTCalloutView *calloutView = (RCTCalloutView *)subview;
     calloutView.mapDelegate = self;
     [self setCalloutView:calloutView];
   }
