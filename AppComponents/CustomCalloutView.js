@@ -10,7 +10,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import AGSCalloutView from '../ArcGISReactComponents/AGSCalloutView';
+import CalloutView from '../ArcGISReactComponents/CalloutView';
 
 export default class CustomCalloutView extends Component {
 
@@ -27,10 +27,10 @@ export default class CustomCalloutView extends Component {
         let {visible, placeData} = this.props;
         let point = placeData ? placeData.locationPoint : null;
         return (
-        <AGSCalloutView visible={visible}
+        <CalloutView visible={visible}
                         showAtPoint={point}>
             {this._renderCustomSubview(placeData)}
-        </AGSCalloutView>
+        </CalloutView>
         );
     }
 

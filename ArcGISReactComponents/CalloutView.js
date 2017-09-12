@@ -5,7 +5,7 @@ import {
     requireNativeComponent,
 } from 'react-native';
 
-class AGSCalloutView extends React.Component {
+class CalloutView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +20,7 @@ class AGSCalloutView extends React.Component {
     }
 }
 
-AGSCalloutView.propTypes = {
+CalloutView.propTypes = {
     visible:PropTypes.bool.isRequired,
     title:PropTypes.string,
     detail:PropTypes.string,
@@ -34,7 +34,7 @@ AGSCalloutView.propTypes = {
 };
 
 // ARNCalloutView is generated from ARNCalloutViewManager which is defined in Objective C
-let ARNCalloutView = requireNativeComponent('ARNCalloutView',AGSCalloutView);
-module.exports = AGSCalloutView;
+let ARNCalloutView = requireNativeComponent('ARNCalloutView',CalloutView);
+module.exports = CalloutView;
 
 //AGSPoint: (-117.196000, 34.057000), sr: 4326
