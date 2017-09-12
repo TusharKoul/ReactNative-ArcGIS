@@ -1,5 +1,5 @@
 //
-//  ARNLocatorTask.h
+//  RCTLocatorTask.h
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 8/25/17.
@@ -10,6 +10,6 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
 
-@interface ARNLocatorTask : NSObject<RCTBridgeModule>
+@interface RCTLocatorTask : NSObject<RCTBridgeModule>
 
 @end

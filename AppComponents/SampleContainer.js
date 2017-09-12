@@ -19,7 +19,7 @@ import CustomCalloutView from './CustomCalloutView';
 import SearchPlaceTextInput from './SearchPlaceTextInput';
 import SearchResultsListView from './SearchResultsListView';
 
-let {AGSLocatorTask} = NativeModules;
+let {LocatorTask} = NativeModules;
 export default class SampleContainer extends Component {
 
     // Lifecycle methods ----->
@@ -38,6 +38,11 @@ export default class SampleContainer extends Component {
                 visible:false,
             }
         };
+    }
+
+    componentDidMount() {
+        // careful of spelling here!
+        LocatorTask.initWithURL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer');
     }
 
 
@@ -75,7 +80,7 @@ export default class SampleContainer extends Component {
     };
 
     _onSearchItemPress = (searchItem) => {
-        AGSLocatorTask.geocodeWithSearchText(searchItem.label)
+        LocatorTask.geocodeWithSearchText(searchItem.label)
             .then(this._handleGeocodeSuccess)
             .catch(this._handleGeocodeFailure);
     };

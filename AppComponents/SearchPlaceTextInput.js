@@ -9,7 +9,7 @@ import {
     NativeModules
 } from 'react-native';
 
-let {AGSLocatorTask} = NativeModules;
+let {LocatorTask} = NativeModules;
 export default class SearchPlaceTextInput extends Component {
 
     constructor(props) {
@@ -18,11 +18,6 @@ export default class SearchPlaceTextInput extends Component {
         // typingTimeout isn't directly responsible for manipulating UI,
         // hence it's not part of the state, rather its a member of the class
         this.typingTimeout = 0;
-    }
-
-    componentDidMount() {
-        // careful of spelling here!
-        AGSLocatorTask.initWithURL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer');
     }
 
     render() {
@@ -52,7 +47,7 @@ export default class SearchPlaceTextInput extends Component {
                     "city"
                 ]
             };
-            AGSLocatorTask.suggestWithSearchTextAndParameters(text,parameters)
+            LocatorTask.suggestWithSearchTextAndParameters(text,parameters)
                 .then(this._handleLocatorSuggestionsSuccess)
                 .catch(this._handleLocatorSuggestionsFailure);
         }

@@ -1,24 +1,24 @@
 //
-//  ARNLocatorTask.m
+//  RCTLocatorTask.m
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 8/25/17.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
-#import "ARNLocatorTask.h"
+#import "RCTLocatorTask.h"
 #import <React/RCTConvert.h>
 #import <React/RCTLog.h>
 #import "RCTConvert+ArcGIS.h"
 
 #import <ArcGIS/ArcGIS.h>
 
-@implementation ARNLocatorTask
+@implementation RCTLocatorTask
 {
   AGSLocatorTask *_locatorTask;
 }
 
-RCT_EXPORT_MODULE(AGSLocatorTask);
+RCT_EXPORT_MODULE(LocatorTask);
 
 
 RCT_EXPORT_METHOD(initWithURL:(NSString*)urlString) {
@@ -106,7 +106,7 @@ RCT_REMAP_METHOD(geocodeWithSearchTextAndParameters,
 
 -(bool)rejectWhenUninitialized:(RCTPromiseRejectBlock)reject {
   if(_locatorTask == nil) {
-    NSError *error = [NSError errorWithDomain:@"ARNLocatorTaskDomain"
+    NSError *error = [NSError errorWithDomain:@"RCTLocatorTaskDomain"
                                          code:1
                                      userInfo:nil];
     reject(@"1", @"initialize locator task before calling its methods", error);
