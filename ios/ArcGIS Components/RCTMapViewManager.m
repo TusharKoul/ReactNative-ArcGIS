@@ -1,12 +1,12 @@
 //
-//  ARNMapViewManager.m
+//  RCTMapViewManager.m
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 8/23/17.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
-#import "ARNMapViewManager.h"
+#import "RCTMapViewManager.h"
 #import "RCTMapView.h"
 #import "RCTConvert+ArcGIS.h"
 #import <React/RCTLog.h>
@@ -14,7 +14,7 @@
 #import <React/UIView+React.h>
 #import <React/RCTUIManager.h>
 
-@implementation ARNMapViewManager
+@implementation RCTMapViewManager
 
 RCT_EXPORT_MODULE()
 

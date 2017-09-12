@@ -7,7 +7,10 @@ import {
     findNodeHandle
 } from 'react-native';
 
-const { ARNMapViewManager } = NativeModules;
+// If a module named RCTMyClassName is exported from Objc
+// it'll be imported as MyClassName from NativeModules
+// here RCTMapViewManager was exported
+const { MapViewManager } = NativeModules;
 
 class MapView extends React.Component {
 
@@ -26,12 +29,13 @@ class MapView extends React.Component {
     }
 
     addGraphics(graphics) {
-        ARNMapViewManager.addGraphics(findNodeHandle(this),graphics);
+        console.log(NativeModules);
+        MapViewManager.addGraphics(findNodeHandle(this),graphics);
     }
 
     // method returns a Promise
     identifyGraphicsOverlays(screenPoint, tolerance, returnPopupsOnly, maximumResults) {
-        return ARNMapViewManager.identifyGraphicsOverlays(findNodeHandle(this), screenPoint, tolerance, returnPopupsOnly, maximumResults);
+        return MapViewManager.identifyGraphicsOverlays(findNodeHandle(this), screenPoint, tolerance, returnPopupsOnly, maximumResults);
     }
 
     _onTap(event: Event) {
@@ -53,6 +57,6 @@ MapView.propTypes = {
     onTap:PropTypes.func
 };
 
-// ARNMapView is generated from ARNMapViewManager which is defined in Objective C
-let RCTMapView = requireNativeComponent('ARNMapView',MapView);
+// RCTMapView is generated from RCTMapViewManager which is defined in Objective C
+let RCTMapView = requireNativeComponent('RCTMapView',MapView);
 module.exports = MapView;

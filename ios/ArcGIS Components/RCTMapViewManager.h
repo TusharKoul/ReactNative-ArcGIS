@@ -1,5 +1,5 @@
 //
-//  ARNMapViewManager.h
+//  RCTMapViewManager.h
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 8/23/17.
@@ -8,6 +8,6 @@
 
 #import <React/RCTViewManager.h>
 
-@interface ARNMapViewManager : RCTViewManager
+@interface RCTMapViewManager : RCTViewManager
 
 @end
