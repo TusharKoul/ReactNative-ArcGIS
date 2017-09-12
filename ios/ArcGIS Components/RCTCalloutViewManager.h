@@ -1,5 +1,5 @@
 //
-//  ARNCalloutViewManager.h
+//  RCTCalloutViewManager.h
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 9/7/17.
@@ -8,6 +8,6 @@
 
 #import <React/RCTViewManager.h>
 
-@interface ARNCalloutViewManager : RCTViewManager
+@interface RCTCalloutViewManager : RCTViewManager
 
 @end

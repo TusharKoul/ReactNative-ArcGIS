@@ -1,19 +1,19 @@
 
 
 //
-//  ARNCalloutViewManager.m
+//  RCTCalloutViewManager.m
 //  ArcGISReactSample
 //
 //  Created by Tushar Koul on 9/7/17.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
-#import "ARNCalloutViewManager.h"
+#import "RCTCalloutViewManager.h"
 #import "ARNCalloutView.h"
 
 #import "RCTConvert+ArcGIS.h"
 
-@implementation ARNCalloutViewManager
+@implementation RCTCalloutViewManager
 
 RCT_EXPORT_MODULE()
 

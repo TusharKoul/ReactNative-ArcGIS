@@ -13,7 +13,7 @@ class CalloutView extends React.Component {
 
     render() {
         return (
-            <ARNCalloutView
+            <RCTCalloutView
                 {...this.props}
             />
         );
@@ -33,8 +33,6 @@ CalloutView.propTypes = {
     })
 };
 
-// ARNCalloutView is generated from ARNCalloutViewManager which is defined in Objective C
-let ARNCalloutView = requireNativeComponent('ARNCalloutView',CalloutView);
+// ARNCalloutView is generated from RCTCalloutViewManager which is defined in Objective C
+let RCTCalloutView = requireNativeComponent('RCTCalloutView',CalloutView);
 module.exports = CalloutView;
-
-//AGSPoint: (-117.196000, 34.057000), sr: 4326
