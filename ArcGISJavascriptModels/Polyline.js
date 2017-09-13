@@ -1,4 +1,4 @@
-class AGSPolyline {
+class Polyline {
 
     constructor(properties) {
         if (!properties) properties = {};
@@ -30,4 +30,4 @@ class AGSPolyline {
 }
 
 
-module.exports = AGSPolyline;
+module.exports = Polyline;

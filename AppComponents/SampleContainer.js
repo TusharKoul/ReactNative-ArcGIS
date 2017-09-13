@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 
 import MapView from '../ArcGISReactComponents/MapView';
-import AGSPoint from '../ArcGISJavascriptModels/AGSPoint';
-import AGSPolyline from '../ArcGISJavascriptModels/AGSPolyline';
-import AGSSimpleMarkerSymbol from '../ArcGISJavascriptModels/AGSSimpleMarkerSymbol';
-import AGSSimpleLineSymbol from '../ArcGISJavascriptModels/AGSSimpleLineSymbol';
-import AGSSpatialReference from '../ArcGISJavascriptModels/AGSSpatialReference';
+import Point from '../ArcGISJavascriptModels/Point';
+import Polyline from '../ArcGISJavascriptModels/Polyline';
+import  SimpleMarkerSymbol from '../ArcGISJavascriptModels/SimpleMarkerSymbol';
+import  SimpleLineSymbol from '../ArcGISJavascriptModels/SimpleLineSymbol';
+import  SpatialReference from '../ArcGISJavascriptModels/SpatialReference';
 
 import CustomCalloutView from './CustomCalloutView';
 import SearchPlaceTextInput from './SearchPlaceTextInput';
@@ -27,7 +27,7 @@ export default class SampleContainer extends Component {
     constructor(props) {
         super(props);
 
-        let esriPoint = AGSPoint.pointWGS84(34.057,-117.196);
+        let esriPoint = Point.pointWGS84(34.057,-117.196);
 
         this.places = [];
 
@@ -135,10 +135,10 @@ export default class SampleContainer extends Component {
     _addPointOnMap = (placeData) => {
         let markerSymbol;
         if(placeData.isVisited) {
-            markerSymbol = AGSSimpleMarkerSymbol.symbol(AGSSimpleMarkerSymbol.Style.Triangle, 'rgba(100,34,255,1)', 10);
+            markerSymbol =  SimpleMarkerSymbol.symbol( SimpleMarkerSymbol.Style.Triangle, 'rgba(100,34,255,1)', 10);
         }
         else if(placeData.isWishlist) {
-            markerSymbol = AGSSimpleMarkerSymbol.symbol(AGSSimpleMarkerSymbol.Style.Diamond, 'red', 10);
+            markerSymbol =  SimpleMarkerSymbol.symbol( SimpleMarkerSymbol.Style.Diamond, 'red', 10);
         }
 
         let pointGraphic = {
@@ -151,9 +151,9 @@ export default class SampleContainer extends Component {
     };
 
     _addLineOnMap = (point1, point2) => {
-        let lineSymbol = AGSSimpleLineSymbol.symbol(AGSSimpleLineSymbol.Style.DashDot, 'green', 3);
-        let line = new AGSPolyline({
-            spatialReference:AGSSpatialReference.WGS84()
+        let lineSymbol =  SimpleLineSymbol.symbol( SimpleLineSymbol.Style.DashDot, 'green', 3);
+        let line = new  Polyline({
+            spatialReference: SpatialReference.WGS84()
         });
 
         line.addPoint(point1.x,point1.y);

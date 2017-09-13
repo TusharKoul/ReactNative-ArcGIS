@@ -1,4 +1,4 @@
-class AGSSpatialReference {
+class SpatialReference {
     constructor(properties) {
         if (!properties) properties = {};
 
@@ -8,13 +8,13 @@ class AGSSpatialReference {
     }
 
     static webMercator() {
-        return new AGSSpatialReference({
+        return new SpatialReference({
             wkid:3857
         });
     }
 
     static WGS84() {
-        return new AGSSpatialReference({
+        return new SpatialReference({
             wkid:4326
         });
     }
@@ -25,4 +25,4 @@ class AGSSpatialReference {
 
 }
 
-module.exports = AGSSpatialReference;
+module.exports = SpatialReference;

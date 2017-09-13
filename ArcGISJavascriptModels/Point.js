@@ -1,6 +1,6 @@
-import AGSSpatialReference from './AGSSpatialReference'
+import SpatialReference from './SpatialReference'
 
-class AGSPoint {
+class Point {
     constructor(properties) {
         if (!properties) properties = {};
         this.x = properties.x;
@@ -11,7 +11,7 @@ class AGSPoint {
     }
 
     static point({x,y,spatialReference} = {}) {
-        return new AGSPoint({
+        return new Point({
             x:x,
             y:y,
             spatialReference:spatialReference,
@@ -19,20 +19,20 @@ class AGSPoint {
     }
 
     static pointWebMercator(x, y) {
-        return new AGSPoint({
+        return new Point({
             x:x,
             y:y,
-            spatialReference:AGSSpatialReference.webMercator()
+            spatialReference:SpatialReference.webMercator()
         });
     }
 
     static pointWGS84(latitude, longitude) {
-        return new AGSPoint({
+        return new Point({
             x:longitude,
             y:latitude,
-            spatialReference:AGSSpatialReference.WGS84()
+            spatialReference:SpatialReference.WGS84()
         });
     }
 }
 
-module.exports = AGSPoint;
+module.exports = Point;

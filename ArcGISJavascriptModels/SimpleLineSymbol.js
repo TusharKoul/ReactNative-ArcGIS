@@ -1,6 +1,6 @@
-import AGSSymbol from './AGSSymbol'
+import Symbol from './Symbol'
 
-class AGSSimpleLineSymbol extends AGSSymbol{
+class SimpleLineSymbol extends Symbol{
     constructor(properties) {
         if (!properties) properties = {};
         super(properties);
@@ -11,7 +11,7 @@ class AGSSimpleLineSymbol extends AGSSymbol{
     }
 
     static symbol(style, color, width) {
-        return new AGSSimpleLineSymbol({
+        return new SimpleLineSymbol({
             style:style,
             color:this.getColorArray(color),
             width:width,
@@ -20,7 +20,7 @@ class AGSSimpleLineSymbol extends AGSSymbol{
     }
 }
 
-const AGSSimpleLineSymbolStyle = {
+const SimpleLineSymbolStyle = {
     Dash : "esriSLSDash",
     DashDot : "esriSLSDashDotDot",
     Dot : "esriSLSDot",
@@ -28,6 +28,6 @@ const AGSSimpleLineSymbolStyle = {
     Solid : "esriSLSSolid"
 };
 
-AGSSimpleLineSymbol.Style = AGSSimpleLineSymbolStyle;
+SimpleLineSymbol.Style = SimpleLineSymbolStyle;
 
-module.exports = AGSSimpleLineSymbol ;
+module.exports = SimpleLineSymbol ;

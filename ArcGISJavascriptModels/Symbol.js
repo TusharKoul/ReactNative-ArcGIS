@@ -1,6 +1,6 @@
 import {processColor} from 'react-native';
 
-class AGSSymbol {
+class Symbol {
     static getColorArray(color) {
         let argb = processColor(color);
         let a = ((argb >> 24) & 0xFF);
@@ -11,4 +11,4 @@ class AGSSymbol {
     }
 }
 
-module.exports = AGSSymbol;
+module.exports = Symbol;

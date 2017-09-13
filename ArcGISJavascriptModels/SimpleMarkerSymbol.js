@@ -1,6 +1,6 @@
-import AGSSymbol from './AGSSymbol'
+import Symbol from './Symbol'
 
-class AGSimpleMarkerSymbol extends AGSSymbol{
+class SimpleMarkerSymbol extends Symbol{
     constructor(properties) {
         if (!properties) properties = {};
         super(properties);
@@ -12,7 +12,7 @@ class AGSimpleMarkerSymbol extends AGSSymbol{
     }
 
     static symbol(style, color, size) {
-        return new AGSimpleMarkerSymbol({
+        return new SimpleMarkerSymbol({
             style:style,
             color:this.getColorArray(color),
             size:size,
@@ -21,7 +21,7 @@ class AGSimpleMarkerSymbol extends AGSSymbol{
     }
 }
 
-const AGSimpleMarkerSymbolStyle = {
+const SimpleMarkerSymbolStyle = {
     Circle : "esriSMSCircle",
     Cross : "esriSMSCross",
     Diamond : "esriSMSDiamond",
@@ -30,6 +30,6 @@ const AGSimpleMarkerSymbolStyle = {
     X : "esriSMSX"
 };
 
-AGSimpleMarkerSymbol.Style = AGSimpleMarkerSymbolStyle;
+SimpleMarkerSymbol.Style = SimpleMarkerSymbolStyle;
 
-module.exports = AGSimpleMarkerSymbol;
+module.exports = SimpleMarkerSymbol;
