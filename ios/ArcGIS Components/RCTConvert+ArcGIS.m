@@ -27,6 +27,7 @@ AGSJsonSerializableConvert(AGSPoint)
 AGSJsonSerializableConvert(AGSSymbol)
 AGSJsonSerializableConvert(AGSGeometry)
 AGSJsonSerializableConvert(AGSSpatialReference)
+AGSJsonSerializableConvert(AGSRenderer)
 
 +(AGSSuggestParameters *)AGSSuggestParameters:(id)json {
   json = [self NSDictionary:json];
@@ -79,6 +80,24 @@ AGSJsonSerializableConvert(AGSSpatialReference)
                                                  symbol:symbol
                                              attributes:attributes];
   return graphic;
+}
+
++ (AGSGraphicsOverlay *)AGSGraphicsOverlay: (id)json {
+  json = [self NSDictionary:json];
+  AGSGraphicsOverlay *o = [AGSGraphicsOverlay graphicsOverlay];
+  o.maxScale = [self double:json[@"maxScale"]];
+  o.minScale = [self double:json[@"minScale"]];
+  if(json[@"opacity"]) {
+    o.opacity = [self float:json[@"opacity"]];
+  }
+  if(json[@"visible"]) {
+    o.visible = [self float:json[@"visible"]];
+  }
+  o.renderer = [self AGSRenderer:json[@"renderer"]];
+  o.renderingMode = [self int:json[@"renderingMode"]];
+  o.selectionColor = [self UIColor:json[@"selectionColor"]];
+  o.labelsEnabled = [self BOOL:json[@"labelsEnabled"]];
+  return o;
 }
 
 @end

@@ -15,7 +15,7 @@ import SimpleMarkerSymbol from '../ArcGISJavascriptModels/SimpleMarkerSymbol';
 import SimpleLineSymbol from '../ArcGISJavascriptModels/SimpleLineSymbol';
 import SpatialReference from '../ArcGISJavascriptModels/SpatialReference';
 import GraphicsOverlay from '../ArcGISJavascriptModels/GraphicsOverlay';
-
+import SimpleRenderer from '../ArcGISJavascriptModels/SimpleRenderer';
 
 import CustomCalloutView from './CustomCalloutView';
 import SearchPlaceTextInput from './SearchPlaceTextInput';
@@ -38,8 +38,7 @@ export default class SampleContainer extends Component {
             viewPointCenter:esriPoint,
             graphicsOverlays:{
                 "pointOverlay": new GraphicsOverlay(),
-                "lineOverlay": new GraphicsOverlay(),
-                "polygonOverlay":new GraphicsOverlay()
+                "lineOverlay": this._createLineGraphicsOverlay(),
             },
             callout: {
                 visible:false,
@@ -76,6 +75,16 @@ export default class SampleContainer extends Component {
         </View>
         );
     }
+
+    // Helper method ----->
+
+    _createLineGraphicsOverlay = () => {
+        let lineSymbol =  SimpleLineSymbol.symbol( SimpleLineSymbol.Style.DashDot, 'green', 3);
+        return new GraphicsOverlay({
+            renderingMode : GraphicsOverlay.RenderingMode.Dynamic,
+            renderer : SimpleRenderer.simpleRenderer(lineSymbol)
+        });
+    };
 
 
     // Events ----->
@@ -158,7 +167,7 @@ export default class SampleContainer extends Component {
     };
 
     _addLineOnMap = (point1, point2) => {
-        let lineSymbol =  SimpleLineSymbol.symbol( SimpleLineSymbol.Style.DashDot, 'green', 3);
+
         let line = new  Polyline({
             spatialReference: SpatialReference.WGS84()
         });
@@ -168,7 +177,6 @@ export default class SampleContainer extends Component {
 
         let lineGraphic = {
             geometry:line,
-            symbol:lineSymbol
         };
         this._mapView.addGraphics([lineGraphic],"lineOverlay");
     };

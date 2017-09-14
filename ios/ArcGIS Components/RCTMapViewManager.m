@@ -42,7 +42,7 @@ RCT_EXPORT_METHOD(changeGraphicsOverlays:(nonnull NSNumber *)reactTag
     RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
     
     for(NSString *key in toAddOrUpdate) {
-      AGSGraphicsOverlay *o = [AGSGraphicsOverlay graphicsOverlay];
+      AGSGraphicsOverlay *o = [RCTConvert AGSGraphicsOverlay:toAddOrUpdate[key]];      
       [mapView updateGraphicsOverlay:o forKey:key];
     }
     
