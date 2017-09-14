@@ -11,9 +11,11 @@ import {
 import MapView from '../ArcGISReactComponents/MapView';
 import Point from '../ArcGISJavascriptModels/Point';
 import Polyline from '../ArcGISJavascriptModels/Polyline';
-import  SimpleMarkerSymbol from '../ArcGISJavascriptModels/SimpleMarkerSymbol';
-import  SimpleLineSymbol from '../ArcGISJavascriptModels/SimpleLineSymbol';
-import  SpatialReference from '../ArcGISJavascriptModels/SpatialReference';
+import SimpleMarkerSymbol from '../ArcGISJavascriptModels/SimpleMarkerSymbol';
+import SimpleLineSymbol from '../ArcGISJavascriptModels/SimpleLineSymbol';
+import SpatialReference from '../ArcGISJavascriptModels/SpatialReference';
+import GraphicsOverlay from '../ArcGISJavascriptModels/GraphicsOverlay';
+import SimpleRenderer from '../ArcGISJavascriptModels/SimpleRenderer';
 
 import CustomCalloutView from './CustomCalloutView';
 import SearchPlaceTextInput from './SearchPlaceTextInput';
@@ -34,6 +36,10 @@ export default class SampleContainer extends Component {
         this.state = {
             searchData: null,
             viewPointCenter:esriPoint,
+            graphicsOverlays:{
+                "pointOverlay": new GraphicsOverlay(),
+                "lineOverlay": this._createLineGraphicsOverlay(),
+            },
             callout: {
                 visible:false,
             }
@@ -47,16 +53,16 @@ export default class SampleContainer extends Component {
 
 
     render() {
-        let {searchData, viewPointCenter, callout} = this.state;
+        let {searchData, viewPointCenter, callout, graphicsOverlays} = this.state;
         return (
         <View style={styles.container}>
 
             <SearchPlaceTextInput onSearchComplete={this._onSearchComplete}/>
-
             <MapView ref={mapView => {this._mapView = mapView; }}
-                        style={styles.map}
-                        viewPointCenter={viewPointCenter}
-                        onTap={this._onMapTapped}>
+                     graphicsOverlays={graphicsOverlays}
+                     style={styles.map}
+                     viewPointCenter={viewPointCenter}
+                     onTap={this._onMapTapped}>
                 <CustomCalloutView visible={callout.visible}
                                    placeData={callout.placeData}
                                    isFlightsButtonVisible={callout.isFlightsButtonVisible}
@@ -69,6 +75,16 @@ export default class SampleContainer extends Component {
         </View>
         );
     }
+
+    // Helper method ----->
+
+    _createLineGraphicsOverlay = () => {
+        let lineSymbol =  SimpleLineSymbol.symbol( SimpleLineSymbol.Style.DashDot, 'green', 3);
+        return new GraphicsOverlay({
+            renderingMode : GraphicsOverlay.RenderingMode.Dynamic,
+            renderer : SimpleRenderer.simpleRenderer(lineSymbol)
+        });
+    };
 
 
     // Events ----->
@@ -110,7 +126,7 @@ export default class SampleContainer extends Component {
     _onMapTapped = (event) => {
         let tolerance = 10;
         let maxResults = 5;
-        this._mapView.identifyGraphicsOverlays(event.screenPoint, tolerance, false, maxResults)
+        this._mapView.identifyGraphicsOverlays("pointOverlay", event.screenPoint, tolerance, false, maxResults)
             .then(this._onIdentifySuccess)
             .catch((err) => console.log(err))
     };
@@ -146,12 +162,12 @@ export default class SampleContainer extends Component {
             symbol:markerSymbol,
             attributes:placeData
         };
-        this._mapView.addGraphics([pointGraphic]);
+        this._mapView.addGraphics([pointGraphic],"pointOverlay");
         this.places.push(placeData);
     };
 
     _addLineOnMap = (point1, point2) => {
-        let lineSymbol =  SimpleLineSymbol.symbol( SimpleLineSymbol.Style.DashDot, 'green', 3);
+
         let line = new  Polyline({
             spatialReference: SpatialReference.WGS84()
         });
@@ -161,9 +177,8 @@ export default class SampleContainer extends Component {
 
         let lineGraphic = {
             geometry:line,
-            symbol:lineSymbol
         };
-        this._mapView.addGraphics([lineGraphic]);
+        this._mapView.addGraphics([lineGraphic],"lineOverlay");
     };
 
     _onSavePressed = (placeData) => {

@@ -26,13 +26,14 @@
   RCTEventDispatcher *_eventDispatcher;
   AGSMapView *_mapView;
   AGSPoint *_viewPointCenter;
-  AGSGraphicsOverlay *_graphicsOverlay;
+  NSMutableDictionary<NSString *, AGSGraphicsOverlay *> *_graphicsOverlays;
 }
 
 
 -(instancetype)initWithEventDispatcher:(id)eventDispatcher {
   if (self = [super init]) {
     _eventDispatcher = eventDispatcher;
+    _graphicsOverlays = [NSMutableDictionary dictionary];
   }
   return self;
 }
@@ -55,9 +56,11 @@
                               levelOfDetail:2];
   _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _mapView.touchDelegate = self;
+
   //inserting a default graphics overlay
-  _graphicsOverlay = [AGSGraphicsOverlay graphicsOverlay];
-  [_mapView.graphicsOverlays addObject:_graphicsOverlay];
+  for(NSString *overlayId in _graphicsOverlays) {
+      [_mapView.graphicsOverlays addObject:_graphicsOverlays[overlayId]];
+  }
   
   [self addSubview:_mapView];
 
@@ -81,6 +84,30 @@
 -(void)setViewPointCenter:(AGSPoint *)center{
   _viewPointCenter = center;
   [_mapView setViewpointCenter:_viewPointCenter completion:nil];
+}
+
+
+-(void)updateGraphicsOverlay:(AGSGraphicsOverlay *)newOverlay forKey:(NSString *)key{
+  AGSGraphicsOverlay *oldOverlay = _graphicsOverlays[key];
+  if(oldOverlay) {
+    // if an oldOverlay with same key exists, that means its an update not a new addition
+    // we need to replace the old overlay, so we copy the old graphics to new overlay
+    [newOverlay.graphics addObjectsFromArray:oldOverlay.graphics];
+    
+    // remove old overlay
+    [_mapView.graphicsOverlays removeObject:oldOverlay];
+  }
+  
+  // set new overlay to local dictionary and to the map
+  _graphicsOverlays[key] = newOverlay;
+  [_mapView.graphicsOverlays addObject:newOverlay];
+}
+
+-(void)removeGraphicsOverlays:(NSArray *)toRemove{
+  for (NSString *key in toRemove) {
+    [_mapView.graphicsOverlays removeObject:_graphicsOverlays[key]];
+    [_graphicsOverlays removeObjectForKey:key];
+  }
 }
 
 -(void)setCalloutView:(RCTCalloutView *)calloutView {
@@ -125,18 +152,30 @@
 }
 
 
--(void)addGraphics:(NSArray <AGSGraphic *> *)graphics {
-  [_graphicsOverlay.graphics addObjectsFromArray:graphics];
+-(void)addGraphics:(NSArray <AGSGraphic *> *)graphics toOverlay:(NSString *)overlayId {
+  AGSGraphicsOverlay *overlay = _graphicsOverlays[overlayId];
+  if(!overlay) {
+    RCTLogWarn(@"overlay id doesn't exist");
+    return;
+  }
+  [overlay.graphics addObjectsFromArray:graphics];
 }
 
--(void)identifyGraphicsOverlaysAtScreenPoint:(CGPoint)screenPoint
-                                   tolerance:(double)tolerance
-                            returnPopupsOnly:(BOOL)returnPopupsOnly
-                              maximumResults:(int)maximumResults
-                                    resolver:(RCTPromiseResolveBlock)resolve
-                                    rejecter:(RCTPromiseRejectBlock)reject  {
+-(void)identifyGraphicsOverlays:(NSString *)overlayId
+                    screenPoint:(CGPoint)screenPoint
+                      tolerance:(double)tolerance
+               returnPopupsOnly:(BOOL)returnPopupsOnly
+                 maximumResults:(int)maximumResults
+                       resolver:(RCTPromiseResolveBlock)resolve
+                       rejecter:(RCTPromiseRejectBlock)reject  {
+  
+  AGSGraphicsOverlay *overlay = _graphicsOverlays[overlayId];
+  if(!overlay) {
+    RCTLogWarn(@"overlay id doesn't exist");
+    return;
+  }
   __weak __typeof__(self) welf = self;
-  [_mapView identifyGraphicsOverlay:_graphicsOverlay
+  [_mapView identifyGraphicsOverlay:overlay
                         screenPoint:screenPoint
                           tolerance:tolerance
                    returnPopupsOnly:returnPopupsOnly

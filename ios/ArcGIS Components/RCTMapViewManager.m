@@ -33,18 +33,40 @@ RCT_CUSTOM_VIEW_PROPERTY(viewPointCenter, AGSPoint, RCTMapView) {
   [view setViewPointCenter:point];
 }
 
+
+RCT_EXPORT_METHOD(changeGraphicsOverlays:(nonnull NSNumber *)reactTag
+                  udpateOverlays:(NSDictionary *)toAddOrUpdate
+                  deleteOverlays:(NSArray<NSString *> *)toRemove)
+{
+  [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+    RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
+    
+    for(NSString *key in toAddOrUpdate) {
+      AGSGraphicsOverlay *o = [RCTConvert AGSGraphicsOverlay:toAddOrUpdate[key]];      
+      [mapView updateGraphicsOverlay:o forKey:key];
+    }
+    
+    if(toRemove && toRemove.count >0) {
+      [mapView removeGraphicsOverlays:toRemove];
+    }
+  }];
+}
+
+
 RCT_EXPORT_METHOD(addGraphics:(nonnull NSNumber *)reactTag
-                  graphics:(nonnull NSArray *)graphics)
+                  graphics:(nonnull NSArray *)graphics
+                  overlayId:(nonnull NSString *)overlayId)
 {
   [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
     RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
     NSArray <AGSGraphic *> *graphicsToAdd = [RCTConvert AGSGraphics:graphics];
-    [mapView addGraphics:graphicsToAdd];
+    [mapView addGraphics:graphicsToAdd toOverlay:overlayId];
   }];
 }
 
 
 RCT_EXPORT_METHOD(identifyGraphicsOverlays:(nonnull NSNumber *)reactTag
+                  overlayId:(NSString *)overlayId
                   screenPoint:(CGPoint)screenPoint
                   tolerance:(double)tolerance
                   returnPopupsOnly:(BOOL)returnPopupsOnly
@@ -53,51 +75,16 @@ RCT_EXPORT_METHOD(identifyGraphicsOverlays:(nonnull NSNumber *)reactTag
                   rejecter:(RCTPromiseRejectBlock)reject) {
   [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
     RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
-    [mapView identifyGraphicsOverlaysAtScreenPoint:screenPoint
-                                         tolerance:tolerance
-                                  returnPopupsOnly:returnPopupsOnly
-                                    maximumResults:maximumResults
-                                          resolver:resolve rejecter:reject];
+    [mapView identifyGraphicsOverlays:overlayId
+                        screenPoint:screenPoint
+                            tolerance:tolerance
+                     returnPopupsOnly:returnPopupsOnly
+                       maximumResults:maximumResults
+                             resolver:resolve rejecter:reject];
   }];
 }
 
 
 RCT_EXPORT_VIEW_PROPERTY(onTap, RCTBubblingEventBlock);
-
--(NSDictionary *)constantsToExport {
-  return @{
-           @"GeometryType":@{
-               @"AGSGeometryTypePoint":@(AGSGeometryTypePoint),
-               @"AGSGeometryTypePolyline":@(AGSGeometryTypePolyline),
-               @"AGSGeometryTypePolygon":@(AGSGeometryTypePolygon)
-               },
-           @"PointSymbolStyles": @{
-               @"AGSSimpleMarkerSymbolStyleCircle":@(AGSSimpleMarkerSymbolStyleCircle),
-               @"AGSSimpleMarkerSymbolStyleCross":@(AGSSimpleMarkerSymbolStyleCross),
-               @"AGSSimpleMarkerSymbolStyleDiamond":@(AGSSimpleMarkerSymbolStyleDiamond),
-               @"AGSSimpleMarkerSymbolStyleSquare":@(AGSSimpleMarkerSymbolStyleSquare),
-               @"AGSSimpleMarkerSymbolStyleTriangle":@(AGSSimpleMarkerSymbolStyleTriangle),
-               @"AGSSimpleMarkerSymbolStyleX":@(AGSSimpleMarkerSymbolStyleX),
-               },
-           @"LineSymbolStyles": @{
-               @"AGSSimpleLineSymbolStyleDash":@(AGSSimpleLineSymbolStyleDash),
-               @"AGSSimpleLineSymbolStyleDashDot":@(AGSSimpleLineSymbolStyleDashDot),
-               @"AGSSimpleLineSymbolStyleDashDotDot":@(AGSSimpleLineSymbolStyleDashDotDot),
-               @"AGSSimpleLineSymbolStyleDot":@(AGSSimpleLineSymbolStyleDot),
-               @"AGSSimpleLineSymbolStyleNull":@(AGSSimpleLineSymbolStyleNull),
-               @"AGSSimpleLineSymbolStyleSolid":@(AGSSimpleLineSymbolStyleSolid),
-               },
-           @"FillSymbolStyles": @{
-               @"AGSSimpleFillSymbolStyleBackwardDiagonal":@(AGSSimpleFillSymbolStyleBackwardDiagonal),
-               @"AGSSimpleFillSymbolStyleCross":@(AGSSimpleFillSymbolStyleCross),
-               @"AGSSimpleFillSymbolStyleDiagonalCross":@(AGSSimpleFillSymbolStyleDiagonalCross),
-               @"AGSSimpleFillSymbolStyleForwardDiagonal":@(AGSSimpleFillSymbolStyleForwardDiagonal),
-               @"AGSSimpleFillSymbolStyleHorizontal":@(AGSSimpleFillSymbolStyleHorizontal),
-               @"AGSSimpleFillSymbolStyleNull":@(AGSSimpleFillSymbolStyleNull),
-               @"AGSSimpleFillSymbolStyleSolid":@(AGSSimpleFillSymbolStyleSolid),
-               @"AGSSimpleFillSymbolStyleVertical":@(AGSSimpleFillSymbolStyleVertical),
-               },
-           };
-}
 
 @end
