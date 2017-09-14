@@ -11,9 +11,11 @@ import {
 import MapView from '../ArcGISReactComponents/MapView';
 import Point from '../ArcGISJavascriptModels/Point';
 import Polyline from '../ArcGISJavascriptModels/Polyline';
-import  SimpleMarkerSymbol from '../ArcGISJavascriptModels/SimpleMarkerSymbol';
-import  SimpleLineSymbol from '../ArcGISJavascriptModels/SimpleLineSymbol';
-import  SpatialReference from '../ArcGISJavascriptModels/SpatialReference';
+import SimpleMarkerSymbol from '../ArcGISJavascriptModels/SimpleMarkerSymbol';
+import SimpleLineSymbol from '../ArcGISJavascriptModels/SimpleLineSymbol';
+import SpatialReference from '../ArcGISJavascriptModels/SpatialReference';
+import GraphicsOverlay from '../ArcGISJavascriptModels/GraphicsOverlay';
+
 
 import CustomCalloutView from './CustomCalloutView';
 import SearchPlaceTextInput from './SearchPlaceTextInput';
@@ -34,6 +36,11 @@ export default class SampleContainer extends Component {
         this.state = {
             searchData: null,
             viewPointCenter:esriPoint,
+            graphicsOverlays:{
+                "pointOverlay": new GraphicsOverlay(),
+                "lineOverlay": new GraphicsOverlay(),
+                "polygonOverlay":new GraphicsOverlay()
+            },
             callout: {
                 visible:false,
             }
@@ -47,16 +54,16 @@ export default class SampleContainer extends Component {
 
 
     render() {
-        let {searchData, viewPointCenter, callout} = this.state;
+        let {searchData, viewPointCenter, callout, graphicsOverlays} = this.state;
         return (
         <View style={styles.container}>
 
             <SearchPlaceTextInput onSearchComplete={this._onSearchComplete}/>
-
             <MapView ref={mapView => {this._mapView = mapView; }}
-                        style={styles.map}
-                        viewPointCenter={viewPointCenter}
-                        onTap={this._onMapTapped}>
+                     graphicsOverlays={graphicsOverlays}
+                     style={styles.map}
+                     viewPointCenter={viewPointCenter}
+                     onTap={this._onMapTapped}>
                 <CustomCalloutView visible={callout.visible}
                                    placeData={callout.placeData}
                                    isFlightsButtonVisible={callout.isFlightsButtonVisible}
