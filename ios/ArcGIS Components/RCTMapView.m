@@ -152,18 +152,30 @@
 }
 
 
--(void)addGraphics:(NSArray <AGSGraphic *> *)graphics {
-  [_mapView.graphicsOverlays[0].graphics addObjectsFromArray:graphics];
+-(void)addGraphics:(NSArray <AGSGraphic *> *)graphics toOverlay:(NSString *)overlayId {
+  AGSGraphicsOverlay *overlay = _graphicsOverlays[overlayId];
+  if(!overlay) {
+    RCTLogWarn(@"overlay id doesn't exist");
+    return;
+  }
+  [overlay.graphics addObjectsFromArray:graphics];
 }
 
--(void)identifyGraphicsOverlaysAtScreenPoint:(CGPoint)screenPoint
-                                   tolerance:(double)tolerance
-                            returnPopupsOnly:(BOOL)returnPopupsOnly
-                              maximumResults:(int)maximumResults
-                                    resolver:(RCTPromiseResolveBlock)resolve
-                                    rejecter:(RCTPromiseRejectBlock)reject  {
+-(void)identifyGraphicsOverlays:(NSString *)overlayId
+                    screenPoint:(CGPoint)screenPoint
+                      tolerance:(double)tolerance
+               returnPopupsOnly:(BOOL)returnPopupsOnly
+                 maximumResults:(int)maximumResults
+                       resolver:(RCTPromiseResolveBlock)resolve
+                       rejecter:(RCTPromiseRejectBlock)reject  {
+  
+  AGSGraphicsOverlay *overlay = _graphicsOverlays[overlayId];
+  if(!overlay) {
+    RCTLogWarn(@"overlay id doesn't exist");
+    return;
+  }
   __weak __typeof__(self) welf = self;
-  [_mapView identifyGraphicsOverlay:_mapView.graphicsOverlays[0]
+  [_mapView identifyGraphicsOverlay:overlay
                         screenPoint:screenPoint
                           tolerance:tolerance
                    returnPopupsOnly:returnPopupsOnly

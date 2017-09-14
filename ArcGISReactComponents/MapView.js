@@ -42,13 +42,13 @@ class MapView extends React.Component {
         );
     }
 
-    addGraphics(graphics) {
-        MapViewManager.addGraphics(findNodeHandle(this),graphics);
+    addGraphics(graphics, overlayId) {
+        MapViewManager.addGraphics(findNodeHandle(this),graphics,overlayId);
     }
 
     // method returns a Promise
-    identifyGraphicsOverlays(screenPoint, tolerance, returnPopupsOnly, maximumResults) {
-        return MapViewManager.identifyGraphicsOverlays(findNodeHandle(this), screenPoint, tolerance, returnPopupsOnly, maximumResults);
+    identifyGraphicsOverlays(overlayId,screenPoint, tolerance, returnPopupsOnly, maximumResults) {
+        return MapViewManager.identifyGraphicsOverlays(findNodeHandle(this), overlayId, screenPoint, tolerance, returnPopupsOnly, maximumResults);
     }
 
     _onTap(event: Event) {

@@ -117,7 +117,7 @@ export default class SampleContainer extends Component {
     _onMapTapped = (event) => {
         let tolerance = 10;
         let maxResults = 5;
-        this._mapView.identifyGraphicsOverlays(event.screenPoint, tolerance, false, maxResults)
+        this._mapView.identifyGraphicsOverlays("pointOverlay", event.screenPoint, tolerance, false, maxResults)
             .then(this._onIdentifySuccess)
             .catch((err) => console.log(err))
     };
@@ -153,7 +153,7 @@ export default class SampleContainer extends Component {
             symbol:markerSymbol,
             attributes:placeData
         };
-        this._mapView.addGraphics([pointGraphic]);
+        this._mapView.addGraphics([pointGraphic],"pointOverlay");
         this.places.push(placeData);
     };
 
@@ -170,7 +170,7 @@ export default class SampleContainer extends Component {
             geometry:line,
             symbol:lineSymbol
         };
-        this._mapView.addGraphics([lineGraphic]);
+        this._mapView.addGraphics([lineGraphic],"lineOverlay");
     };
 
     _onSavePressed = (placeData) => {

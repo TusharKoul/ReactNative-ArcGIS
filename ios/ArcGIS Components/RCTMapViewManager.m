@@ -54,17 +54,19 @@ RCT_EXPORT_METHOD(changeGraphicsOverlays:(nonnull NSNumber *)reactTag
 
 
 RCT_EXPORT_METHOD(addGraphics:(nonnull NSNumber *)reactTag
-                  graphics:(nonnull NSArray *)graphics)
+                  graphics:(nonnull NSArray *)graphics
+                  overlayId:(nonnull NSString *)overlayId)
 {
   [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
     RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
     NSArray <AGSGraphic *> *graphicsToAdd = [RCTConvert AGSGraphics:graphics];
-    [mapView addGraphics:graphicsToAdd];
+    [mapView addGraphics:graphicsToAdd toOverlay:overlayId];
   }];
 }
 
 
 RCT_EXPORT_METHOD(identifyGraphicsOverlays:(nonnull NSNumber *)reactTag
+                  overlayId:(NSString *)overlayId
                   screenPoint:(CGPoint)screenPoint
                   tolerance:(double)tolerance
                   returnPopupsOnly:(BOOL)returnPopupsOnly
@@ -73,11 +75,12 @@ RCT_EXPORT_METHOD(identifyGraphicsOverlays:(nonnull NSNumber *)reactTag
                   rejecter:(RCTPromiseRejectBlock)reject) {
   [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
     RCTMapView *mapView = (RCTMapView *)viewRegistry[reactTag];
-    [mapView identifyGraphicsOverlaysAtScreenPoint:screenPoint
-                                         tolerance:tolerance
-                                  returnPopupsOnly:returnPopupsOnly
-                                    maximumResults:maximumResults
-                                          resolver:resolve rejecter:reject];
+    [mapView identifyGraphicsOverlays:overlayId
+                        screenPoint:screenPoint
+                            tolerance:tolerance
+                     returnPopupsOnly:returnPopupsOnly
+                       maximumResults:maximumResults
+                             resolver:resolve rejecter:reject];
   }];
 }
 
